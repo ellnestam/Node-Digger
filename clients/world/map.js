@@ -35,13 +35,7 @@ function dispatch(message) {
 }
 
 function north() {
-    alert('Hej');
     drawBlackRectangle(0, 0);
-}
-
-
-function handleMove(message) {
-    alert(message);
 }
 
 function drawBlackRectangle(x, y) {
