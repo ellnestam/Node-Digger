@@ -2,6 +2,7 @@ classes
 bin
 *~
 *#
+*.#
 target
 .DS_Store
 .settings

@@ -1,0 +1,1 @@
+var players = new Array("");

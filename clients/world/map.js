@@ -7,8 +7,14 @@ function drawMap() {
 
 function subscribe() {
 
-    var subscription = client.subscribe('/move', function(message) {
-	dispatch(message);
+    var subscription = client.subscribe('/events', function(message) {
+	var from = message.from;
+	var to = message.to;
+	var canvas = document.getElementById('myWorld');
+	var context = canvas.getContext('2d');
+	// alert("From " + from.x + ":" + from.y);
+	removePlayerFrom(context, from.x, from.y);
+	placePlayerAt(context, to.x, to.y);
     });
 
     subscription.callback(function() {
@@ -22,29 +28,22 @@ function subscribe() {
 }
 
 function dispatch(message) {
-    alert("Message was: " + message.direction);
-    if (message.direction == 'north') {
-	north();
-    } else if (message.direction == 'south') {
-	south();
-    } else if (message.direction == 'east') {
-	east();
-    } else if (message.direction == 'west') {
-	west();
-    }
+    alert("Message was: " + message.from);
 }
 
-function north() {
-    drawBlackRectangle(0, 0);
+function drawBlackRectangle(context, x, y) {
+    drawRectangle(context, '#000000', x, y);
 }
 
-function drawBlackRectangle(x, y) {
-    var canvas = document.getElementById('myWorld');
-    var context = canvas.getContext('2d');
-    context.fillStyle="#000000";
+function removePlayerFrom(context, x, y) {
+    drawRectangle(context, '#FFFFFF', x, y);
+}
+
+function drawRectangle(context, color, x, y) {
+    context.fillStyle=color;
     context.fillRect(x,y,10,10);
 }
 
-function placePlayerAt(canvas, x, y) {
-    drawBlackRectangle(canvas, x, y);
+function placePlayerAt(context, x, y) {
+    drawBlackRectangle(context, x, y);
 }

@@ -1,0 +1,4 @@
+requirejs(['world'],
+function (world) {
+
+});
