@@ -1,7 +1,9 @@
 var client = new Faye.Client('http://localhost:8000/nodedigger');
 
 function drawMap() {
-    var world = new World();
+    var canvas = document.getElementById('myWorld');
+    var context = canvas.getContext('2d');
+    var world = new World(context);
     world.visualize(new Board());
 }
 
@@ -12,7 +14,6 @@ function subscribe() {
 	var to = message.to;
 	var canvas = document.getElementById('myWorld');
 	var context = canvas.getContext('2d');
-	// alert("From " + from.x + ":" + from.y);
 	removePlayerFrom(context, from.x, from.y);
 	placePlayerAt(context, to.x, to.y);
     });

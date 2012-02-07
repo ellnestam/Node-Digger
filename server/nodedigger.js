@@ -37,8 +37,6 @@ function dispatch(message) {
 }
 
 function createEvent(player, message) {
-//    alert
-
     var point = {x: player.x, y: player.y};
     if (message.direction == 'north') {
 	point.y = point.y - 10;

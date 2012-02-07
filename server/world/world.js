@@ -1,1 +1,5 @@
-var players = new Array("");
+
+
+World.prototype.parse = function() {
+    return "2";
+}

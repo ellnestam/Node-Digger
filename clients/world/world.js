@@ -2,9 +2,8 @@ function Player(name) {
     this.name = name;
 }
 
-function World()
-{
-    this.players = new Array(new Player("Mad Hat"));
+function World(context) {
+    this.context = context;
 }
  
 World.prototype.advance = function(event) {
@@ -12,7 +11,5 @@ World.prototype.advance = function(event) {
 }
 
 World.prototype.visualize = function(board) {
-
-    board.putPlayers(this.players);
-
+    board.drawBorder(this.context);
 }
