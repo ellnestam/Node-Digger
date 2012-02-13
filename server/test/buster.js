@@ -8,7 +8,16 @@ buster.testCase("Parse world-files", {
     },
 
     "Can split string on line break": function () {
-        buster.assert.equals([1, 2, 3],
-			     this.world.parse("1\n2\n3"));
+        buster.assert.equals(
+	    this.world.parse("ww\nww"),
+	    ["ww", "ww"]
+	);
+    },
+
+    "Test": function () {
+	var field = this.world.parse("ww\nww");
+        buster.assert.equals(field.width, 2);
+        // buster.assert.equals(field.height, 2);
     }
+
 })
