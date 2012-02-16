@@ -70,12 +70,12 @@ function createPlayerEvent(player, message, world) {
     }
 
     if (validMove(point, world)) {
-	return {playerName: 'Black', 
+	return {playerName: player.playerName, 
 		from: {x: player.x, y: player.y},
 		to: point};
     } 
 
-    return {playerName: 'Black', 
+    return {playerName: player.playerName, 
 	    from: {x: player.x, y: player.y},
 	    to: {x: player.x, y: player.y}};
 }
