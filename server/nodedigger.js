@@ -19,28 +19,37 @@ var subscription = client.subscribe('/move', function(message) {
 });
 
 function dispatch(message) {
-    if (players.length < 1) {
-	players.push({
-	    name: 'Black',
-	    x: 10,
-	    y: 10
-	});
+    if (!playerExists(message)) {
+	players.push(
+	    {playerName: message.playerName,
+	     x: 10,
+	     y: 10}
+	);
     }
 
     var p = players[0];
-    var event = createEvent(p, message);
+    var event = createPlayerEvent(p, message);
     client.publish('/events', event);
 
     client.publish('/map', mapEvent());
 
-    players[0] = {x: event.to.x, y: event.to.y, name: 'Black'};
+    players[0] = {x: event.to.x, y: event.to.y, playerName: message.playerName};
+}
+
+function playerExists(message) {
+    for (p in players) {
+	if (players[p].name === message.playerName) {
+	    return true;
+	}
+    }
+    return false;
 }
 
 function mapEvent() {
     return {width : 640, height : 480};
 }
 
-function createEvent(player, message) {
+function createPlayerEvent(player, message) {
     var point = {x: player.x, y: player.y};
     if (message.direction == 'north') {
 	point.y = point.y - 10;
@@ -58,7 +67,8 @@ function createEvent(player, message) {
 	point.x = point.x - 10;
     }
 
-    return {move: 'black',
+    return {move: 'Black',
+	    playerName: 'Black',
 	    from: {x: player.x, y: player.y},
 	    to: point
     };
