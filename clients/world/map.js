@@ -1,21 +1,40 @@
 var client = new Faye.Client('http://localhost:8000/nodedigger');
 
-function drawMap() {
+var world;
+var board;
+
+function initMap() {
     var canvas = document.getElementById('myWorld');
     var context = canvas.getContext('2d');
-    var world = new World(context);
-    world.visualize(new Board());
+    world = new World(context);
+    board = new Board();
+}
+
+function drawMap() {
+    world.visualize(board);
+}
+
+function handleMove(message) {
+    var from = message.from;
+    var to = message.to;
+    var canvas = document.getElementById('myWorld');
+    var context = canvas.getContext('2d');
+    removePlayerFrom(context, from.x, from.y);
+    placePlayerAt(context, to.x, to.y);
+}
+
+function updateMap() {
+    world.visualize(board);
 }
 
 function subscribe() {
 
+    var mapSubscription = client.subscribe('/map', function(message) {
+	updateMap(message);
+    });
+
     var subscription = client.subscribe('/events', function(message) {
-	var from = message.from;
-	var to = message.to;
-	var canvas = document.getElementById('myWorld');
-	var context = canvas.getContext('2d');
-	removePlayerFrom(context, from.x, from.y);
-	placePlayerAt(context, to.x, to.y);
+	handleMove(message);
     });
 
     subscription.callback(function() {
@@ -26,10 +45,6 @@ function subscribe() {
 	alert(error.message);
     });
 
-}
-
-function dispatch(message) {
-    alert("Message was: " + message.from);
 }
 
 function drawBlackRectangle(context, x, y) {

@@ -5,6 +5,7 @@ var port = 8000;
 
 var world = require('./world/world.js');
 var player = require('./player/player.js');
+var world = require('./world/world.js');
 
 var bayeux = new faye.NodeAdapter({mount: '/nodedigger', timeout: 45});
 bayeux.listen(port);
@@ -27,13 +28,16 @@ function dispatch(message) {
     }
 
     var p = players[0];
-
     var event = createEvent(p, message);
+    client.publish('/events', event);
 
-    var publication = client.publish('/events', event);
+    client.publish('/map', mapEvent());
 
     players[0] = {x: event.to.x, y: event.to.y, name: 'Black'};
+}
 
+function mapEvent() {
+    return {width : 320, height : 240};
 }
 
 function createEvent(player, message) {
