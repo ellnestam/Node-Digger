@@ -37,7 +37,7 @@ function dispatch(message) {
 }
 
 function mapEvent() {
-    return {width : 320, height : 240};
+    return {width : 640, height : 480};
 }
 
 function createEvent(player, message) {

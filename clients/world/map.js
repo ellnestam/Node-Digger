@@ -8,6 +8,7 @@ function initMap() {
     var context = canvas.getContext('2d');
     world = new World();
     board = new Board(context, world);
+    subscribe();
 }
 
 function drawMap() {
@@ -23,14 +24,15 @@ function handleMove(message) {
     placePlayerAt(context, to.x, to.y);
 }
 
-function updateMap() {
+function updateMap(message) {
     world.visualize(board);
 }
 
 function subscribe() {
 
     var mapSubscription = client.subscribe('/map', function(message) {
-	updateMap(message);
+	world.updateMap(message);
+	world.visualize(board);
     });
 
     var subscription = client.subscribe('/events', function(message) {
