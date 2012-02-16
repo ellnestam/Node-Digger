@@ -20,8 +20,8 @@ function handleMove(message) {
     var to = message.to;
     var canvas = document.getElementById('myWorld');
     var context = canvas.getContext('2d');
-    removePlayerFrom(context, from.x, from.y);
-    placePlayerAt(context, to.x, to.y);
+    board.removePlayerFrom(from.x, from.y);
+    board.placePlayerAt(to.x, to.y);
 }
 
 function updateMap(message) {
@@ -46,22 +46,4 @@ function subscribe() {
     subscription.errback(function(error) {
 	alert(error.message);
     });
-
-}
-
-function drawBlackRectangle(context, x, y) {
-    drawRectangle(context, '#000000', x, y);
-}
-
-function removePlayerFrom(context, x, y) {
-    drawRectangle(context, '#FFFFFF', x, y);
-}
-
-function drawRectangle(context, color, x, y) {
-    context.fillStyle=color;
-    context.fillRect(x,y,10,10);
-}
-
-function placePlayerAt(context, x, y) {
-    drawBlackRectangle(context, x, y);
 }

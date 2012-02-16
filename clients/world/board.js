@@ -13,3 +13,22 @@ Board.prototype.drawBorder = function (width, height) {
     this.context.lineTo(point.x, point.y);
     this.context.stroke();
 }
+
+
+Board.prototype.removePlayerFrom = function(x, y) {
+    drawRectangle(this.context, '#FFFFFF', x, y);
+}
+
+Board.prototype.placePlayerAt = function(x, y) {
+    drawBlackRectangle(this.context, x, y);
+}
+
+
+function drawBlackRectangle(context, x, y) {
+    drawRectangle(context, '#000000', x, y);
+}
+
+function drawRectangle(context, color, x, y) {
+    context.fillStyle=color;
+    context.fillRect(x,y,10,10);
+}
