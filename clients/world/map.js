@@ -11,15 +11,9 @@ function initMap() {
     subscribe();
 }
 
-function drawMap() {
-    world.visualize(board);
-}
-
 function handleMove(message) {
     var from = message.from;
     var to = message.to;
-    var canvas = document.getElementById('myWorld');
-    var context = canvas.getContext('2d');
     board.removePlayerFrom(from.x, from.y);
     board.placePlayerAt(to.x, to.y);
 }

@@ -18,6 +18,8 @@ var subscription = client.subscribe('/move', function(message) {
     dispatch(message);
 });
 
+var world = {width : 640, height : 480};
+
 function dispatch(message) {
     if (!playerExists(message)) {
 	players.push(
@@ -28,7 +30,7 @@ function dispatch(message) {
     }
 
     var p = players[0];
-    var event = createPlayerEvent(p, message);
+    var event = createPlayerEvent(p, message, world);
     client.publish('/events', event);
     client.publish('/map', mapEvent());
 
@@ -45,11 +47,12 @@ function playerExists(message) {
 }
 
 function mapEvent() {
-    return {width : 640, height : 480};
+    return {width : world.width, height : world.height};
 }
 
-function createPlayerEvent(player, message) {
+function createPlayerEvent(player, message, world) {
     var point = {x: player.x, y: player.y};
+
     if (message.direction == 'north') {
 	point.y = point.y - 10;
     }
@@ -66,9 +69,29 @@ function createPlayerEvent(player, message) {
 	point.x = point.x - 10;
     }
 
-    return {move: 'Black',
-	    playerName: 'Black',
+    if (validMove(point, world)) {
+	return {playerName: 'Black', 
+		from: {x: player.x, y: player.y},
+		to: point};
+    } 
+
+    return {playerName: 'Black', 
 	    from: {x: player.x, y: player.y},
-	    to: point
-    };
+	    to: {x: player.x, y: player.y}};
+}
+
+function validMove(point, world) {
+    return withinBorders(point, world);
+}
+
+function withinBorders(point, world) {
+    if (point.x < 10 || point.y < 10) {
+	return false;
+    }
+    
+    if (point.x > world.width || point.y > world.height) {
+	return false;
+    }
+    
+    return true;
 }
