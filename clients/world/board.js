@@ -1,14 +1,15 @@
-function Board() {
-    // this.canvas = document.getElementById('myWorld');
+function Board(context, world) {
+    this.context = context;
+    this.world = world;
 }
 
-Board.prototype.drawBorder = function (ctx) {
+Board.prototype.drawBorder = function () {
     var point = {x: 10, y: 10};
     var size = {width: 640, height: 480};
-    ctx.moveTo(point.x, point.y);
-    ctx.lineTo(point.x + size.width, point.y);
-    ctx.lineTo(point.x + size.width, point.y + size.height);
-    ctx.lineTo(point.x, point.y + size.height);
-    ctx.lineTo(point.x, point.y);
-    ctx.stroke();
+    this.context.moveTo(point.x, point.y);
+    this.context.lineTo(point.x + size.width, point.y);
+    this.context.lineTo(point.x + size.width, point.y + size.height);
+    this.context.lineTo(point.x, point.y + size.height);
+    this.context.lineTo(point.x, point.y);
+    this.context.stroke();
 }

@@ -1,7 +1,6 @@
-function World(context) {
-    this.context = context;
+function World() {
 }
 
 World.prototype.visualize = function(board) {
-    board.drawBorder(this.context);
+    board.drawBorder();
 }
