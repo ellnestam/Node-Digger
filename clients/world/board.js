@@ -14,13 +14,61 @@ Board.prototype.drawBorder = function (width, height) {
     this.context.stroke();
 }
 
+Board.prototype.drawObstacles = function(obstacles) {
+    for (o in obstacles) {
+	this.drawObstacle(obstacles[o]);
+    }
+}
+
+Board.prototype.drawMatrices = function(matrices) {
+    for (m in matrices) {
+	var matrix = matrices[m];
+	this.drawMatrix(matrices[m]);
+    }
+}
+
+Board.prototype.drawMatrix = function(goldMatrix) {
+    var nuggets = goldMatrix[2];
+    var point = {x: goldMatrix[0], y : goldMatrix[1]};
+    drawImageNugget(this.context, point, nuggets);
+    // for (i = 0; i < nuggets; i++) {
+    // drawNugget(this.context, position.x + i, position.y + i);
+    // }
+}
+
+// function drawNugget(context, x, y) {
+//    context.fillStyle='#FF0000';
+//    context.fillRect(x,y,1,1);
+//}
+
+function drawImageNugget(context, point, amount) {
+    var base_image = new Image();
+    base_image.src = 'images/gold' + amount + '.png';
+    base_image.onload = function() {
+	context.drawImage(base_image, point.x, point.y);
+    }
+}
+
 
 Board.prototype.removePlayerFrom = function(x, y) {
     drawRectangle(this.context, '#FFFFFF', x, y);
 }
 
 Board.prototype.placePlayerAt = function(x, y) {
-    drawBlackRectangle(this.context, x, y);
+    drawRectangle(this.context, '#ffff00', x, y);
+}
+
+/* Board.prototype.placePlayerAt = function(context, point) {
+    var base_image = new Image();
+    base_image.src = 'images/digger.png';
+    base_image.onload = function() {
+	context.drawImage(base_image, point.x, point.y);
+    }
+} */
+
+
+Board.prototype.drawObstacle = function(o) {
+    drawBlackRectangle(this.context, o[0], o[1]);
 }
 
 

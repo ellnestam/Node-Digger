@@ -18,10 +18,6 @@ function handleMove(message) {
     board.placePlayerAt(to.x, to.y);
 }
 
-function updateMap(message) {
-    world.visualize(board);
-}
-
 function subscribe() {
 
     var mapSubscription = client.subscribe('/map', function(message) {

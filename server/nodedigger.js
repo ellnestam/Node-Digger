@@ -18,7 +18,14 @@ var subscription = client.subscribe('/move', function(message) {
     dispatch(message);
 });
 
-var world = {width : 640, height : 480};
+var world = {width : 640, 
+	     height : 480,
+	     obstacles : [[50, 50], [200, 300]],
+	     gold : [[350, 350, 3],
+		     [400, 100, 2],
+		     [150, 130, 6],
+		    ],
+	    };
 
 function dispatch(message) {
     if (!playerExists(message)) {
@@ -47,7 +54,7 @@ function playerExists(message) {
 }
 
 function mapEvent() {
-    return {width : world.width, height : world.height};
+    return world;
 }
 
 function createPlayerEvent(player, message, world) {
@@ -81,7 +88,19 @@ function createPlayerEvent(player, message, world) {
 }
 
 function validMove(point, world) {
-    return withinBorders(point, world);
+    return withinBorders(point, world) && treadableGround(point, world);
+}
+
+function treadableGround(point, world) {
+    var obstacles = world.obstacles;
+    
+    for (o in obstacles) {
+	var obstacle = obstacles[o];
+	if (point.x === obstacle[0] && point.y === obstacle[1]) {
+	    return false;
+	}
+    }
+    return true;
 }
 
 function withinBorders(point, world) {
