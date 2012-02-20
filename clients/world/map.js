@@ -11,13 +11,6 @@ function initMap() {
     subscribe();
 }
 
-function handleMove(message) {
-    var from = message.from;
-    var to = message.to;
-    board.removePlayerFrom(from.x, from.y);
-    board.placePlayerAt(to.x, to.y);
-}
-
 function subscribe() {
 
     var mapSubscription = client.subscribe('/map', function(message) {
@@ -26,7 +19,7 @@ function subscribe() {
     });
 
     var subscription = client.subscribe('/events', function(message) {
-	handleMove(message);
+	board.handleMove(message);
     });
 
     subscription.callback(function() {

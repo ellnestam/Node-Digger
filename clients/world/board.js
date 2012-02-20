@@ -49,6 +49,15 @@ function drawImageNugget(context, point, amount) {
     }
 }
 
+Board.prototype.handleMove = function(message) {
+    var from = message.from;
+    var to = message.to;
+    // this.removePlayerFrom(from.x, from.y);
+    // this.placePlayerAt(to.x, to.y);
+    this.removeDiggerFrom(this.context, from);
+    this.placeDiggerAt(this.context, to);
+}
+
 
 Board.prototype.removePlayerFrom = function(x, y) {
     drawRectangle(this.context, '#FFFFFF', x, y);
@@ -58,13 +67,21 @@ Board.prototype.placePlayerAt = function(x, y) {
     drawRectangle(this.context, '#ffff00', x, y);
 }
 
-/* Board.prototype.placePlayerAt = function(context, point) {
+Board.prototype.placeDiggerAt = function(context, point) {
     var base_image = new Image();
     base_image.src = 'images/digger.png';
     base_image.onload = function() {
 	context.drawImage(base_image, point.x, point.y);
     }
-} */
+}
+
+Board.prototype.removeDiggerFrom = function(context, point) {
+    var base_image = new Image();
+    base_image.src = 'images/empty.png';
+    base_image.onload = function() {
+	context.drawImage(base_image, point.x, point.y);
+    }
+}
 
 
 Board.prototype.drawObstacle = function(o) {
