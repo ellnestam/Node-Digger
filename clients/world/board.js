@@ -5,10 +5,10 @@ function Board(context, world) {
 }
 
 Board.prototype.drawBorder = function (width, height) {
-    this.drawEast(width, height);
-    this.drawHorizontalAt(width, height, 'w_south');
+    this.drawVerticalAt(width, height, 'east');
     this.drawHorizontalAt(width, 0, 'w_north');
-    this.drawWest(width, height);
+    this.drawHorizontalAt(width, height, 'w_south');
+    this.drawVerticalAt(0, height, 'west');
 }
 
 Board.prototype.scale = function(point) {
@@ -21,22 +21,12 @@ Board.prototype.drawHorizontalAt = function(width, y, image) {
     }
 }
 
-Board.prototype.drawEast = function(width, height) {
-    this.drawImageAt(this.context, {x: width, y: 0}, 'w_northeast');    
+Board.prototype.drawVerticalAt = function(x, height, orientation) {
+    this.drawImageAt(this.context, {x: x, y: 0}, 'w_north' + orientation);    
     for (var i = 1; i < height; i++) {
-	var x = i;
-	this.drawImageAt(this.context, {x: width, y: x}, 'w_east');
+	this.drawImageAt(this.context, {x: x, y: i}, 'w_' + orientation);
     }
-    this.drawImageAt(this.context, {x: width, y: height}, 'w_southeast');
-}
-
-Board.prototype.drawWest = function(width, height) {
-    this.drawImageAt(this.context, {x: 0, y: 0}, 'w_northwest');    
-    for (var i = 1; i < height; i++) {
-	var x = i;
-	this.drawImageAt(this.context, {x: 0, y: x}, 'w_west');
-    }
-    this.drawImageAt(this.context, {x: 0, y: height}, 'w_southwest');
+    this.drawImageAt(this.context, {x: x, y: height}, 'w_south' + orientation);
 }
 
 
