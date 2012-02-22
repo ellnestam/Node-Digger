@@ -5,9 +5,9 @@ function Board(context, world) {
 }
 
 Board.prototype.drawBorder = function (width, height) {
-    this.drawNorth(width);
     this.drawEast(width, height);
-    this.drawSouth(width, height);
+    this.drawHorizontalAt(width, height, 'w_south');
+    this.drawHorizontalAt(width, 0, 'w_north');
     this.drawWest(width, height);
 }
 
@@ -15,10 +15,9 @@ Board.prototype.scale = function(point) {
     return {x : point.x * this.scaleFactor, y : point.y * this.scaleFactor};
 }
 
-Board.prototype.drawNorth = function(width) {
+Board.prototype.drawHorizontalAt = function(width, y, image) {
     for (var i = 0; i < width; i++) {
-	var x = i;
-	this.drawImageAt(this.context, {x: x, y: 0}, 'w_north');
+	this.drawImageAt(this.context, {x: i, y: y}, image);
     }
 }
 
@@ -40,13 +39,6 @@ Board.prototype.drawWest = function(width, height) {
     this.drawImageAt(this.context, {x: 0, y: height}, 'w_southwest');
 }
 
-
-Board.prototype.drawSouth = function(width, height) {
-    for (var i = 0; i < width; i++) {
-	var x = i;
-	this.drawImageAt(this.context, {x: x, y: height}, 'w_south');
-    }
-}
 
 Board.prototype.drawImageAt = function(context, point, imageName) {
     var base_image = new Image();
