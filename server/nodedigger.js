@@ -18,12 +18,12 @@ var subscription = client.subscribe('/move', function(message) {
     dispatch(message);
 });
 
-var world = {width : 640, 
-	     height : 480,
-	     obstacles : [[50, 50], [200, 300]],
-	     gold : [[350, 350, 3],
-		     [400, 100, 2],
-		     [150, 130, 6],
+var world = {width : 20, 
+	     height : 15,
+	     obstacles : [[5, 5], [10, 14]],
+	     gold : [[3, 3, 3],
+		     [9, 12, 2],
+		     [7, 13, 6],
 		    ],
 	    };
 
@@ -31,8 +31,8 @@ function dispatch(message) {
     if (!playerExists(message)) {
 	players.push(
 	    {playerName: message.playerName,
-	     x: 10,
-	     y: 10}
+	     x: 1,
+	     y: 1}
 	);
     }
 
@@ -61,19 +61,19 @@ function createPlayerEvent(player, message, world) {
     var point = {x: player.x, y: player.y};
 
     if (message.direction == 'north') {
-	point.y = point.y - 10;
+	point.y = point.y - 1;
     }
 
     if (message.direction == 'south') {
-	point.y = point.y + 10;
+	point.y = point.y + 1;
     }
 
     if (message.direction == 'east') {
-	point.x = point.x + 10;
+	point.x = point.x + 1;
     }
 
     if (message.direction == 'west') {
-	point.x = point.x - 10;
+	point.x = point.x - 1;
     }
 
     if (validMove(point, world)) {
@@ -104,11 +104,11 @@ function treadableGround(point, world) {
 }
 
 function withinBorders(point, world) {
-    if (point.x < 10 || point.y < 10) {
+    if (point.x < 1 || point.y < 1) {
 	return false;
     }
     
-    if (point.x > world.width || point.y > world.height) {
+    if (point.x > world.width - 1 || point.y > world.height - 1) {
 	return false;
     }
     

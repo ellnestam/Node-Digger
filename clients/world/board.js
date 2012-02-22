@@ -1,18 +1,62 @@
 function Board(context, world) {
     this.context = context;
     this.world = world;
+    this.scaleFactor = 32;
 }
 
 Board.prototype.drawBorder = function (width, height) {
-    var point = {x: 10, y: 10};
-    var size = {width: width, height: height};
-    this.context.moveTo(point.x, point.y);
-    this.context.lineTo(point.x + size.width, point.y);
-    this.context.lineTo(point.x + size.width, point.y + size.height);
-    this.context.lineTo(point.x, point.y + size.height);
-    this.context.lineTo(point.x, point.y);
-    this.context.stroke();
+    this.drawNorth(width);
+    this.drawEast(width, height);
+    this.drawSouth(width, height);
+    this.drawWest(width, height);
 }
+
+Board.prototype.scale = function(point) {
+    return {x : point.x * this.scaleFactor, y : point.y * this.scaleFactor};
+}
+
+Board.prototype.drawNorth = function(width) {
+    for (var i = 0; i < width; i++) {
+	var x = i;
+	this.drawImageAt(this.context, {x: x, y: 0}, 'w_north');
+    }
+}
+
+Board.prototype.drawEast = function(width, height) {
+    this.drawImageAt(this.context, {x: width, y: 0}, 'w_northeast');    
+    for (var i = 1; i < height; i++) {
+	var x = i;
+	this.drawImageAt(this.context, {x: width, y: x}, 'w_east');
+    }
+    this.drawImageAt(this.context, {x: width, y: height}, 'w_southeast');
+}
+
+Board.prototype.drawWest = function(width, height) {
+    this.drawImageAt(this.context, {x: 0, y: 0}, 'w_northwest');    
+    for (var i = 1; i < height; i++) {
+	var x = i;
+	this.drawImageAt(this.context, {x: 0, y: x}, 'w_west');
+    }
+    this.drawImageAt(this.context, {x: 0, y: height}, 'w_southwest');
+}
+
+
+Board.prototype.drawSouth = function(width, height) {
+    for (var i = 0; i < width; i++) {
+	var x = i;
+	this.drawImageAt(this.context, {x: x, y: height}, 'w_south');
+    }
+}
+
+Board.prototype.drawImageAt = function(context, point, imageName) {
+    var base_image = new Image();
+    var p = this.scale(point);
+    base_image.src = 'images/' + imageName + '.png';
+    base_image.onload = function() {
+	context.drawImage(base_image, p.x, p.y);
+    }
+}
+
 
 Board.prototype.drawObstacles = function(obstacles) {
     for (o in obstacles) {
@@ -30,70 +74,29 @@ Board.prototype.drawMatrices = function(matrices) {
 Board.prototype.drawMatrix = function(goldMatrix) {
     var nuggets = goldMatrix[2];
     var point = {x: goldMatrix[0], y : goldMatrix[1]};
-    drawImageNugget(this.context, point, nuggets);
-    // for (i = 0; i < nuggets; i++) {
-    // drawNugget(this.context, position.x + i, position.y + i);
-    // }
+    this.drawImageNugget(this.context, point, nuggets);
 }
 
-// function drawNugget(context, x, y) {
-//    context.fillStyle='#FF0000';
-//    context.fillRect(x,y,1,1);
-//}
-
-function drawImageNugget(context, point, amount) {
-    var base_image = new Image();
-    base_image.src = 'images/gold' + amount + '.png';
-    base_image.onload = function() {
-	context.drawImage(base_image, point.x, point.y);
-    }
+Board.prototype.drawImageNugget = function(context, point, amount) {
+    this.drawImageAt(context, point, 'gold' + amount);
 }
 
 Board.prototype.handleMove = function(message) {
     var from = message.from;
     var to = message.to;
-    // this.removePlayerFrom(from.x, from.y);
-    // this.placePlayerAt(to.x, to.y);
     this.removeDiggerFrom(this.context, from);
+    console.log(from);
     this.placeDiggerAt(this.context, to);
 }
 
-
-Board.prototype.removePlayerFrom = function(x, y) {
-    drawRectangle(this.context, '#FFFFFF', x, y);
-}
-
-Board.prototype.placePlayerAt = function(x, y) {
-    drawRectangle(this.context, '#ffff00', x, y);
-}
-
 Board.prototype.placeDiggerAt = function(context, point) {
-    var base_image = new Image();
-    base_image.src = 'images/digger.png';
-    base_image.onload = function() {
-	context.drawImage(base_image, point.x, point.y);
-    }
+    this.drawImageAt(context, point, 'digger');
 }
 
 Board.prototype.removeDiggerFrom = function(context, point) {
-    var base_image = new Image();
-    base_image.src = 'images/empty.png';
-    base_image.onload = function() {
-	context.drawImage(base_image, point.x, point.y);
-    }
+    this.drawImageAt(context, point, 'empty');
 }
-
 
 Board.prototype.drawObstacle = function(o) {
-    drawBlackRectangle(this.context, o[0], o[1]);
-}
-
-
-function drawBlackRectangle(context, x, y) {
-    drawRectangle(context, '#000000', x, y);
-}
-
-function drawRectangle(context, color, x, y) {
-    context.fillStyle=color;
-    context.fillRect(x,y,10,10);
+    this.drawImageAt(this.context, {x: o[0], y: o[1]}, 'center');
 }
