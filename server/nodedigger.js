@@ -5,7 +5,6 @@ var port = 8000;
 
 var world = require('./world/world.js');
 var player = require('./player/player.js');
-var world = require('./world/world.js');
 
 var bayeux = new faye.NodeAdapter({mount: '/nodedigger', timeout: 45});
 bayeux.listen(port);
@@ -14,7 +13,7 @@ var client = new faye.Client('http://localhost:' + port + '/nodedigger');
 
 var players = new Array();
 
-var subscription = client.subscribe('/move', function(message) {
+var subscription = client.subscribe('/act', function(message) {
     dispatch(message);
 });
 
@@ -60,20 +59,32 @@ function mapEvent() {
 function createPlayerEvent(player, message, world) {
     var point = {x: player.x, y: player.y};
 
-    if (message.direction == 'north') {
+    if (message.action == 'north') {
 	point.y = point.y - 1;
     }
 
-    if (message.direction == 'south') {
+    if (message.action == 'south') {
 	point.y = point.y + 1;
     }
 
-    if (message.direction == 'east') {
+    if (message.action == 'east') {
 	point.x = point.x + 1;
     }
 
-    if (message.direction == 'west') {
+    if (message.action == 'west') {
 	point.x = point.x - 1;
+    }
+
+    if (message.action == 'look') {
+	console.log(message.action);
+    }
+
+    if (message.action == 'grab') {
+	console.log(message.action);
+    }
+
+    if (message.action == 'drop') {
+	console.log(message.action);
     }
 
     if (validMove(point, world)) {

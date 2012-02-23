@@ -79,6 +79,6 @@ Board.prototype.removeDiggerFrom = function(context, point) {
     this.drawImageAt(context, point, 'empty');
 }
 
-Board.prototype.drawObstacle = function(o) {
-    this.drawImageAt(this.context, {x: o[0], y: o[1]}, 'center');
+Board.prototype.drawObstacle = function(obstacle) {
+    this.drawImageAt(this.context, {x: obstacle[0], y: obstacle[1]}, 'center');
 }

@@ -1,35 +1,35 @@
 var client = new Faye.Client('http://localhost:8000/nodedigger');
 
-function publish() {
-    var publication = client.publish('/move', {text: 'Hi there'});
+function look() {
+    act('look');
+}
 
-    publication.callback(function() {
-	alert('Message received by server!');
-    });
+function grab() {
+    act('grab');
+}
 
-    publication.errback(function(error) {
-	alert('There was a problem: ' + error.message);
-    });
+function drop() {
+    act('drop');
 }
 
 function north() {
-    move('north');
+    act('north');
 }
 
 function east() {
-    move('east');
+    act('east');
 }
 
 function south() {
-    move('south');
+    act('south');
 }
 
 function west() {
-    move('west');
+    act('west');
 }
 
-function move(direction) {
-    var publication = client.publish('/move', {direction: direction});
+function act(action) {
+    var publication = client.publish('/act', {action: action});
 }
 
 $(document).bind('keydown', 'ctrl+up', function() {north()});
@@ -37,3 +37,7 @@ $(document).bind('keydown', 'ctrl+down', function() {south()});
 
 $(document).bind('keydown', 'ctrl+left', function() {west()});
 $(document).bind('keydown', 'ctrl+right', function() {east()});
+
+$(document).bind('keydown', 'ctrl+shift+l', function() {look()});
+$(document).bind('keydown', 'ctrl+shift+k', function() {grab()});
+$(document).bind('keydown', 'ctrl+shift+m', function() {drop()});
