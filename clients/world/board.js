@@ -87,5 +87,5 @@ Board.prototype.drawObstacle = function(obstacle) {
 }
 
 Board.prototype.drawBank = function(bank) {
-    this.drawImageAt(this.context, {x: bank[0], y: bank[1]}, 'bank');
+    this.drawImageAt(this.context, {x: bank.x, y: bank.y}, 'bank');
 }

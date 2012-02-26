@@ -24,7 +24,7 @@ wd.putGoldAt({x:15, y:8}, 8);
 wd.width = 18;
 wd.height = 15;
 wd.obstacles = [[5, 5], [10, 14]];
-wd.bank = [8, 9];
+wd.bank = {x: 8, y : 9};
 
 function dispatch(message) {
     if (!playerExists(message)) {
@@ -115,11 +115,23 @@ function canCarryMore(player) {
 }
 
 function drop(point, w, player) {
-    if (w.goldAt(point) < 10 && player.load > 0) {
-	w.putGoldAt(point, 1);
+    if (w.goldAt(point) < 9 && player.load > 0) {
+
+	if (atBank(point, w)) {
+	    console.log('Katching');
+	    client.publish('/score', {score : 3});
+	} else {
+	    w.putGoldAt(point, 1);
+	}
+
 	player.load -= 1;
     }
 }
+
+function atBank(point, world) {
+    return (world.bank.x == point.x && world.bank.y == point.y);
+}
+
 
 function validMove(point, world) {
     return withinBorders(point, world) && treadableGround(point, world);
