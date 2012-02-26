@@ -59,14 +59,19 @@ Board.prototype.drawMatrix = function(goldMatrix) {
 }
 
 Board.prototype.drawImageNugget = function(context, point, amount) {
-    this.drawImageAt(context, point, 'gold' + amount);
+    this.drawImageAt(context, point, 'empty');
+    if (amount > 0) {
+	this.drawImageAt(context, point, 'gold' + amount);
+    }
+}
+
+Board.prototype.handleScore = function(message) {
+    console.log(message.score);    
 }
 
 Board.prototype.handleMove = function(message) {
-    var from = message.from;
-    var to = message.to;
-    this.removeDiggerFrom(this.context, from);
-    this.placeDiggerAt(this.context, to);
+    this.removeDiggerFrom(this.context, message.from);
+    this.placeDiggerAt(this.context, message.to);
 }
 
 Board.prototype.placeDiggerAt = function(context, point) {

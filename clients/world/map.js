@@ -22,6 +22,10 @@ function subscribe() {
 	board.handleMove(message);
     });
 
+    var subscription = client.subscribe('/events', function(message) {
+	board.handleScore(message);
+    });
+
     subscription.callback(function() {
 	alert('Connected successfully');
     });

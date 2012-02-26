@@ -58,22 +58,23 @@ function playerExists(message) {
 }
 
 function createPlayerEvent(player, message, world) {
-    var point = {x: player.x, y: player.y};
+    var playerAt = {x: player.x, y: player.y};
+    var futurePosition = {x: player.x, y: player.y};
 
     if (message.action == 'north') {
-	point.y = point.y - 1;
+	futurePosition.y -= 1;
     }
 
     if (message.action == 'south') {
-	point.y = point.y + 1;
+	futurePosition.y += 1;
     }
 
     if (message.action == 'east') {
-	point.x = point.x + 1;
+	futurePosition.x += 1;
     }
 
     if (message.action == 'west') {
-	point.x = point.x - 1;
+	futurePosition.x -= 1;
     }
 
     if (message.action == 'look') {
@@ -81,24 +82,25 @@ function createPlayerEvent(player, message, world) {
     }
 
     if (message.action == 'grab') {
-	grab(point, world, player);
+	grab(playerAt, world, player);
     }
 
     if (message.action == 'drop') {
-	drop(point, world, player);
+	drop(playerAt, world, player);
     }
 
-    if (validMove(point, world)) {
-	return {playerName: player.playerName, 
-		load: player.load,
-		from: {x: player.x, y: player.y},
-		to: point};
+    var p = {
+	playerName: player.playerName, 
+	load: player.load,
+	from: playerAt,
+	to: playerAt,
+    }
+
+    if (validMove(futurePosition, world)) {
+	p.to = futurePosition;
     } 
 
-    return {playerName: player.playerName, 
-	    load: player.load,
-	    from: {x: player.x, y: player.y},
-	    to: {x: player.x, y: player.y}};
+    return p;
 }
 
 function grab(point, w, player) {
