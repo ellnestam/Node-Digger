@@ -29,7 +29,7 @@ function west() {
 }
 
 function act(action) {
-    var publication = client.publish('/act', {action: action});
+    var publication = client.publish('/act', {action: action, playerName: 'Diggah'});
 }
 
 $(document).bind('keydown', 'ctrl+up', function() {north()});

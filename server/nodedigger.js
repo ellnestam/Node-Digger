@@ -13,6 +13,8 @@ var client = new faye.Client('http://localhost:' + port + '/nodedigger');
 
 var players = new Array();
 
+var carryLimit = 3;
+
 var subscription = client.subscribe('/act', function(message) {
     dispatch(message);
 });
@@ -28,7 +30,8 @@ function dispatch(message) {
 	players.push(
 	    {playerName: message.playerName,
 	     x: 1,
-	     y: 1}
+	     y: 1,
+	     load : 0}
 	);
     }
 
@@ -37,7 +40,11 @@ function dispatch(message) {
     client.publish('/events', event);
     client.publish('/map', wd);
 
-    players[0] = {x: event.to.x, y: event.to.y, playerName: message.playerName};
+    players[0] = {x: event.to.x, 
+		  y: event.to.y, 
+		  playerName: message.playerName,
+		  load: event.load
+		 };
 }
 
 function playerExists(message) {
@@ -82,24 +89,32 @@ function createPlayerEvent(player, message, world) {
 
     if (validMove(point, world)) {
 	return {playerName: player.playerName, 
+		load: player.load,
 		from: {x: player.x, y: player.y},
 		to: point};
     } 
 
     return {playerName: player.playerName, 
+	    load: player.load,
 	    from: {x: player.x, y: player.y},
 	    to: {x: player.x, y: player.y}};
 }
 
 function grab(point, w, player) {
-    if (w.goldAt(point) > 0) {
+    if (w.goldAt(point) > 0 && canCarryMore(player)) {
 	w.removeGoldFrom(point, 1);
+	player.load += 1;
     }
 }
 
+function canCarryMore(player) {
+    return player.load < carryLimit;
+}
+
 function drop(point, w, player) {
-    if (w.goldAt(point) < 10) {
+    if (w.goldAt(point) < 10 && player.load > 0) {
 	w.putGoldAt(point, 1);
+	player.load -= 1;
     }
 }
 
