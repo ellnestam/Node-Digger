@@ -54,7 +54,6 @@ var world = {
 	for (g in this.gold) {
 	    a = this.gold[g];
 	    if (this.samePoint(point, a[0])) {
-		console.dir(a[1]);
 		return a[1];
 	    }
 	}

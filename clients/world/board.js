@@ -67,7 +67,6 @@ Board.prototype.handleMove = function(message) {
     var from = message.from;
     var to = message.to;
     this.removeDiggerFrom(this.context, from);
-    console.log(from);
     this.placeDiggerAt(this.context, to);
 }
 

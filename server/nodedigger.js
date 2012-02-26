@@ -17,17 +17,8 @@ var subscription = client.subscribe('/act', function(message) {
     dispatch(message);
 });
 
-var world = {width : 20, 
-	     height : 15,
-	     obstacles : [[5, 5], [10, 14]],
-	     gold : [[3, 3, 3],
-		     [9, 12, 2],
-		     [7, 13, 6],
-		    ],
-	    };
-
 wd.putGoldAt({x:3, y:3}, 3); 
-
+wd.putGoldAt({x:15, y:8}, 8); 
 
 function dispatch(message) {
     if (!playerExists(message)) {
@@ -39,7 +30,7 @@ function dispatch(message) {
     }
 
     var p = players[0];
-    var event = createPlayerEvent(p, message, world);
+    var event = createPlayerEvent(p, message, wd);
     client.publish('/events', event);
     client.publish('/map', mapEvent());
 
@@ -87,11 +78,11 @@ function createPlayerEvent(player, message, world) {
     }
 
     if (message.action == 'grab') {
-	grab(point, world);
+	grab(point, world, player);
     }
 
     if (message.action == 'drop') {
-	console.log(message.action);
+	drop(point, world, player);
     }
 
     if (validMove(point, world)) {
@@ -105,9 +96,15 @@ function createPlayerEvent(player, message, world) {
 	    to: {x: player.x, y: player.y}};
 }
 
-function grab(point, w) {
-    if (wd.goldAt(point) > 0) {
-	wd.removeGoldFrom(point, 1);
+function grab(point, w, player) {
+    if (w.goldAt(point) > 0) {
+	w.removeGoldFrom(point, 1);
+    }
+}
+
+function drop(point, w, player) {
+    if (w.goldAt(point) < 10) {
+	w.putGoldAt(point, 1);
     }
 }
 
