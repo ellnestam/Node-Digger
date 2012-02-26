@@ -54,8 +54,8 @@ Board.prototype.drawMatrices = function(matrices) {
 }
 
 Board.prototype.drawMatrix = function(goldMatrix) {
-    var nuggets = goldMatrix[2];
-    var point = {x: goldMatrix[0], y : goldMatrix[1]};
+    var nuggets = goldMatrix[1];
+    var point = goldMatrix[0];
     this.drawImageNugget(this.context, point, nuggets);
 }
 

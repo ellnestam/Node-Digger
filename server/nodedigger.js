@@ -3,7 +3,7 @@ var http = require('http'),
 
 var port = 8000;
 
-var world = require('./world/world.js');
+var wd = require('./world/world.js');
 var player = require('./player/player.js');
 
 var bayeux = new faye.NodeAdapter({mount: '/nodedigger', timeout: 45});
@@ -25,6 +25,9 @@ var world = {width : 20,
 		     [7, 13, 6],
 		    ],
 	    };
+
+wd.putGoldAt({x:3, y:3}, 3); 
+
 
 function dispatch(message) {
     if (!playerExists(message)) {
@@ -53,7 +56,11 @@ function playerExists(message) {
 }
 
 function mapEvent() {
-    return world;
+    return {width : 20, 
+	    height : 15,
+	    obstacles : [[5, 5], [10, 14]],
+	    gold : wd.gold,
+	   };
 }
 
 function createPlayerEvent(player, message, world) {
@@ -80,7 +87,7 @@ function createPlayerEvent(player, message, world) {
     }
 
     if (message.action == 'grab') {
-	console.log(message.action);
+	grab(point, world);
     }
 
     if (message.action == 'drop') {
@@ -96,6 +103,12 @@ function createPlayerEvent(player, message, world) {
     return {playerName: player.playerName, 
 	    from: {x: player.x, y: player.y},
 	    to: {x: player.x, y: player.y}};
+}
+
+function grab(point, w) {
+    if (wd.goldAt(point) > 0) {
+	wd.removeGoldFrom(point, 1);
+    }
 }
 
 function validMove(point, world) {
