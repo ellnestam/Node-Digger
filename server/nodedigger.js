@@ -19,6 +19,9 @@ var subscription = client.subscribe('/act', function(message) {
 
 wd.putGoldAt({x:3, y:3}, 3); 
 wd.putGoldAt({x:15, y:8}, 8); 
+wd.width = 18;
+wd.height = 15;
+wd.obstacles = [[5, 5], [10, 14]];
 
 function dispatch(message) {
     if (!playerExists(message)) {
@@ -32,7 +35,7 @@ function dispatch(message) {
     var p = players[0];
     var event = createPlayerEvent(p, message, wd);
     client.publish('/events', event);
-    client.publish('/map', mapEvent());
+    client.publish('/map', wd);
 
     players[0] = {x: event.to.x, y: event.to.y, playerName: message.playerName};
 }
@@ -44,14 +47,6 @@ function playerExists(message) {
 	}
     }
     return false;
-}
-
-function mapEvent() {
-    return {width : 20, 
-	    height : 15,
-	    obstacles : [[5, 5], [10, 14]],
-	    gold : wd.gold,
-	   };
 }
 
 function createPlayerEvent(player, message, world) {
