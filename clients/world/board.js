@@ -39,7 +39,6 @@ Board.prototype.drawImageAt = function(context, point, imageName) {
     }
 }
 
-
 Board.prototype.drawObstacles = function(obstacles) {
     for (o in obstacles) {
 	this.drawObstacle(obstacles[o]);
@@ -80,4 +79,8 @@ Board.prototype.removeDiggerFrom = function(context, point) {
 
 Board.prototype.drawObstacle = function(obstacle) {
     this.drawImageAt(this.context, {x: obstacle[0], y: obstacle[1]}, 'center');
+}
+
+Board.prototype.drawBank = function(bank) {
+    this.drawImageAt(this.context, {x: bank[0], y: bank[1]}, 'bank');
 }

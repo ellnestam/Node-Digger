@@ -24,6 +24,7 @@ wd.putGoldAt({x:15, y:8}, 8);
 wd.width = 18;
 wd.height = 15;
 wd.obstacles = [[5, 5], [10, 14]];
+wd.bank = [8, 9];
 
 function dispatch(message) {
     if (!playerExists(message)) {
