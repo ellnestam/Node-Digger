@@ -65,10 +65,11 @@ var world = {
 
 world.prototype = {
     parse : function(string) {
-	var rows = string.split("\n");
+	var r = string.split("\n");
 	return {
-	    width: rows[0].length, 
-	    height: rows.length
+	    rows: r,
+	    width: r[0].length, 
+	    height: r.length
 	};
     },
 

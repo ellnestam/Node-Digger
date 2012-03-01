@@ -4,6 +4,7 @@ var http = require('http'),
 var port = 8000;
 
 var wd = require('./world/world.js');
+var ground = require('./world/ground.js');
 var player = require('./player/player.js');
 
 var bayeux = new faye.NodeAdapter({mount: '/nodedigger', timeout: 45});
@@ -25,6 +26,8 @@ wd.width = 18;
 wd.height = 15;
 wd.obstacles = [[5, 5], [10, 14]];
 wd.bank = {x: 8, y : 9};
+
+var score = {};
 
 function dispatch(message) {
     if (!playerExists(message)) {
@@ -96,7 +99,7 @@ function createPlayerEvent(player, message, world) {
 	to: playerAt,
     }
 
-    if (validMove(futurePosition, world)) {
+    if (ground.validMove(futurePosition, world)) {
 	p.to = futurePosition;
     } 
 
@@ -119,7 +122,8 @@ function drop(point, w, player) {
 
 	if (atBank(point, w)) {
 	    console.log('Katching');
-	    client.publish('/score', {score : 3});
+	    updateScore(score, player.playerName, 1);
+	    client.publish('/score', score);
 	} else {
 	    w.putGoldAt(point, 1);
 	}
@@ -128,35 +132,15 @@ function drop(point, w, player) {
     }
 }
 
+function updateScore(score, player, amount) {
+    if (score[player]) {
+	score[player] += amount;
+    } else {
+	score[player] = amount;
+    }
+    console.dir(score);
+}
+
 function atBank(point, world) {
     return (world.bank.x == point.x && world.bank.y == point.y);
-}
-
-
-function validMove(point, world) {
-    return withinBorders(point, world) && treadableGround(point, world);
-}
-
-function treadableGround(point, world) {
-    var obstacles = world.obstacles;
-    
-    for (o in obstacles) {
-	var obstacle = obstacles[o];
-	if (point.x === obstacle[0] && point.y === obstacle[1]) {
-	    return false;
-	}
-    }
-    return true;
-}
-
-function withinBorders(point, world) {
-    if (point.x < 1 || point.y < 1) {
-	return false;
-    }
-    
-    if (point.x > world.width - 1 || point.y > world.height - 1) {
-	return false;
-    }
-    
-    return true;
 }
