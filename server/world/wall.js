@@ -39,10 +39,6 @@ var wall = {
 
 	return bits;
     },
-
-    
-
-
 }
 
 module.exports = wall;

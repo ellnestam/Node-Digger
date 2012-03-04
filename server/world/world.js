@@ -50,6 +50,19 @@ var world = {
 	return (p1.x == p2.x) && (p1.y == p2.y);
     },
 
+    parse : function(string) {
+	var r = string.split("\n");
+	return {
+	    rows: r,
+	    width: r[0].length, 
+	    height: r.length
+	};
+    },
+
+    fileToString : function(filename) {
+	return fs.readFileSync(filename).toString();
+    },
+
     goldAt : function (point) {
 	for (g in this.gold) {
 	    a = this.gold[g];
@@ -64,18 +77,7 @@ var world = {
 
 
 world.prototype = {
-    parse : function(string) {
-	var r = string.split("\n");
-	return {
-	    rows: r,
-	    width: r[0].length, 
-	    height: r.length
-	};
-    },
 
-    fileToString : function(filename) {
-	return fs.readFileSync(filename).toString();
-    },
 };
 
 module.exports = world;

@@ -6,11 +6,13 @@ World.prototype.visualize = function(board) {
     board.drawMatrices(this.gold);
     board.drawObstacles(this.obstacles);
     board.drawBank(this.bank);
+    board.drawMap(this.map);
 }
 
 World.prototype.updateMap = function(message) {
-    this.width = message.width;
-    this.height = message.height;
+    this.map = message.map;
+    this.width = this.map.width;
+    this.height = this.map.height;
     this.obstacles = message.obstacles;
     this.gold = message.gold;
     this.bank = message.bank;

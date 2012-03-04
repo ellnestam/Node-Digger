@@ -4,7 +4,16 @@ function Board(context, world) {
     this.scaleFactor = 32;
 }
 
-Board.prototype.drawBorder = function (width, height) {
+Board.prototype.drawMap = function(map) {
+    var rows = map.rows;
+     for (i = 0; i < map.width; i++) {
+	for (j = 0; j < map.height; j++) {
+	    
+	}
+    }
+}
+
+Board.prototype.drawBorder = function(width, height) {
     this.drawVerticalAt(width, height, 'east');
     this.drawHorizontalAt(width, 0, 'w_north');
     this.drawHorizontalAt(width, height, 'w_south');
@@ -66,7 +75,7 @@ Board.prototype.drawImageNugget = function(context, point, amount) {
 }
 
 Board.prototype.handleScore = function(message) {
-    console.log(message.score);    
+    // console.log(message.score);    
 }
 
 Board.prototype.handleMove = function(message) {

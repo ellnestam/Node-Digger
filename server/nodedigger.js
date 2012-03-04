@@ -26,6 +26,11 @@ wd.width = 18;
 wd.height = 15;
 wd.obstacles = [[5, 5], [10, 14]];
 wd.bank = {x: 8, y : 9};
+wd.map = createMap();
+
+function createMap() {
+     return wd.parse(wd.fileToString('fields/15.field'));
+}
 
 var score = {};
 
