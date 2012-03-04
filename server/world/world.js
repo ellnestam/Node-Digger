@@ -4,7 +4,7 @@ var world = {
     gold : [],
 
     pointPresent : function (point) {
-	for (g in this.gold) {
+	for (var g in this.gold) {
 	    a = this.gold[g];
 	    if (this.samePoint(point, a[0])) {
 		return true;
@@ -26,7 +26,7 @@ var world = {
 
     removeGoldFrom : function(point, amount) {
 	if (this.pointPresent(point)) {
-	    for (g in this.gold) {
+	    for (var g in this.gold) {
 		a = this.gold[g];
 		if (this.samePoint(point, a[0])) {
 		    this.gold[g][1] -= amount;
@@ -38,7 +38,7 @@ var world = {
     },
 
     addTo : function(point, amount) {
-	for (g in this.gold) {
+	for (var g in this.gold) {
 	    a = this.gold[g];
 	    if (this.samePoint(point, a[0])) {
 		this.gold[g][1] = a[1] + amount;
@@ -64,7 +64,7 @@ var world = {
     },
 
     goldAt : function (point) {
-	for (g in this.gold) {
+	for (var g in this.gold) {
 	    a = this.gold[g];
 	    if (this.samePoint(point, a[0])) {
 		return a[1];

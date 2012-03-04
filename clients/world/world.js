@@ -9,10 +9,10 @@ World.prototype.visualize = function(board) {
     board.drawMap(this.map);
 }
 
-World.prototype.updateMap = function(message) {
-    this.map = message.map;
-    this.width = this.map.width;
-    this.height = this.map.height;
+World.prototype.updateMap = function(message, m) {
+    this.map = m;
+    this.width = m.width;
+    this.height = m.height;
     this.obstacles = message.obstacles;
     this.gold = message.gold;
     this.bank = message.bank;

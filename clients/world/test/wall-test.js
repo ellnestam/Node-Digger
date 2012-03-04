@@ -20,22 +20,30 @@ buster.testCase("Wall Types", {
 					     ['w', 'w', 'w' ],
 					     ['', 'w', 'w' ],
 					    ]);
-	buster.assert.equals(wall.typeFrom(surroundings), 'w_northwest');
+	buster.assert.equals(wall.typeFrom(surroundings), 'w_northeast');
     },
-
-
+    
     "North" : function() {
 	var surroundings = this.wall.toBits([['', '', '' ],
 					     ['w', 'w', 'w' ],
 					     ['w', 'w', 'w' ],
 					    ]);
 	buster.assert.equals(wall.typeFrom(surroundings), 'w_north');
+    }, 
+
+    "South east" : function() {
+	var surroundings = this.wall.toBits([['', 'w', 'w' ],
+					     ['w', 'w', 'w' ],
+					     ['w', 'w', 'w' ],
+					    ]);
+	buster.assert.equals(wall.typeFrom(surroundings), 'w_southeast');
     },
 
+
     "Descriptions to Bits" : function() {
-	var bits = [[0, 2, 0 ],
-		    [8, 0, 32 ],
-		    [0, 128, 0 ],   
+	var bits = [[0, 128, 0 ],
+		    [32, 0, 8 ],
+		    [0, 2, 0 ],   
 		   ];
 
 	var map = [['.', 'w', '.'],

@@ -4,7 +4,7 @@ var field = {
 	var rows = string.split('\n');
 
 	var extraRow = '';
-	for (i = 0; i < rows[0].length; i++) {
+	for (var i = 0; i < rows[0].length; i++) {
 	    extraRow += 'w';
 	}
 

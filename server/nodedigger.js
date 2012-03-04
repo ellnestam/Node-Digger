@@ -20,17 +20,21 @@ var subscription = client.subscribe('/act', function(message) {
     dispatch(message);
 });
 
-wd.putGoldAt({x:3, y:3}, 3); 
-wd.putGoldAt({x:15, y:8}, 8); 
-wd.width = 18;
-wd.height = 15;
-wd.obstacles = [[5, 5], [10, 14]];
-wd.bank = {x: 8, y : 9};
-wd.map = createMap();
+createWorld(wd);
 
-function createMap() {
-     return wd.parse(wd.fileToString('fields/15.field'));
+function createWorld(wd) {
+    wd.map = wd.fileToString('fields/16.field');
+    var myMap = wd.parse(wd.map);
+
+    wd.putGoldAt({x:1, y:1}, 3); 
+    // wd.putGoldAt({x:15, y:8}, 8); 
+    wd.width = myMap.width;
+    wd.height = myMap.height;
+    // wd.obstacles = [[5, 5], [10, 14]];
+    wd.bank = {x: 8, y : 9};
 }
+
+
 
 var score = {};
 
@@ -57,7 +61,7 @@ function dispatch(message) {
 }
 
 function playerExists(message) {
-    for (p in players) {
+    for (var p in players) {
 	if (players[p].name === message.playerName) {
 	    return true;
 	}
@@ -68,7 +72,7 @@ function playerExists(message) {
 function createPlayerEvent(player, message, world) {
     var playerAt = {x: player.x, y: player.y};
     var futurePosition = {x: player.x, y: player.y};
-
+    
     if (message.action == 'north') {
 	futurePosition.y -= 1;
     }

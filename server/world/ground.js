@@ -6,8 +6,8 @@ var ground = {
 	if (point.x < 1 || point.y < 1) {
 	    return false;
 	}
-	
-	if (point.x > world.map.width - 1 || point.y > world.map.height - 1) {
+
+	if (point.x > world.width - 1 || point.y > world.height - 1) {
 	    return false;
 	}
 	
@@ -17,7 +17,7 @@ var ground = {
     treadable : function (point, world) {
 	var obstacles = world.obstacles;
     
-	for (o in obstacles) {
+	for (var o in obstacles) {
 	    var obstacle = obstacles[o];
 	    if (point.x === obstacle[0] && point.y === obstacle[1]) {
 		return false;

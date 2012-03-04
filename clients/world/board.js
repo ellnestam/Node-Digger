@@ -4,20 +4,23 @@ function Board(context, world) {
     this.scaleFactor = 32;
 }
 
-Board.prototype.drawMap = function(map) {
-    var rows = map.rows;
-     for (i = 0; i < map.width; i++) {
-	for (j = 0; j < map.height; j++) {
-	    
+Board.prototype.drawMap = function(field) {
+    for (var i = 0; i < field.width; i++) {
+	for (var j = 0; j < field.height; j++) {
+	    var view = field.look(i, j);
+	    var bits = wall.toBits(view);
+	    var image = wall.typeFrom(bits);
+	    console.log('image ' + image);
+	    this.drawImageAt(this.context, {x: i, y: j}, image);
 	}
     }
 }
 
 Board.prototype.drawBorder = function(width, height) {
-    this.drawVerticalAt(width, height, 'east');
-    this.drawHorizontalAt(width, 0, 'w_north');
-    this.drawHorizontalAt(width, height, 'w_south');
-    this.drawVerticalAt(0, height, 'west');
+    // this.drawVerticalAt(width, height, 'east');
+    // this.drawHorizontalAt(width, 0, 'w_north');
+    // this.drawHorizontalAt(width, height, 'w_south');
+    // this.drawVerticalAt(0, height, 'west');
 }
 
 Board.prototype.scale = function(point) {
@@ -49,13 +52,13 @@ Board.prototype.drawImageAt = function(context, point, imageName) {
 }
 
 Board.prototype.drawObstacles = function(obstacles) {
-    for (o in obstacles) {
+    for (var o in obstacles) {
 	this.drawObstacle(obstacles[o]);
     }
 }
 
 Board.prototype.drawMatrices = function(matrices) {
-    for (m in matrices) {
+    for (var m in matrices) {
 	var matrix = matrices[m];
 	this.drawMatrix(matrices[m]);
     }

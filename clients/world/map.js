@@ -13,13 +13,14 @@ function initMap() {
 
 function subscribe() {
 
-    var mapSubscription = client.subscribe('/map', function(message) {
-	world.updateMap(message);
-	world.visualize(board);
-    });
-
     var subscription = client.subscribe('/events', function(message) {
 	board.handleMove(message);
+    });
+
+    var mapSubscription = client.subscribe('/map', function(message) {
+	var myMap = field.parse(message.map);
+	world.updateMap(message, myMap);
+	world.visualize(board);
     });
 
     var subscription = client.subscribe('/events', function(message) {
