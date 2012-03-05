@@ -35,4 +35,10 @@ buster.testCase("World behaviour", {
 	// buster.assert.equals(w.goldAt(p2), 1);
 	buster.assert.equals(2, 2);
     },
+
+    "Parse finds obstacles" : function() {
+	var field = this.world.parse("ww\nww");
+	buster.assert.equals(field.obstacles, [[0, 0], [0, 1], [1, 0], [1,1]]);
+    },
+
 })
