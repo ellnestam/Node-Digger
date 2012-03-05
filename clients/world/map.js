@@ -6,8 +6,12 @@ var board;
 function initMap() {
     var canvas = document.getElementById('myWorld');
     var context = canvas.getContext('2d');
+
+    var playerCanvas = document.getElementById('player');
+    var playerContext = playerCanvas.getContext('2d');
+
     world = new World();
-    board = new Board(context, world);
+    board = new Board(context, playerContext, world);
     subscribe();
 }
 

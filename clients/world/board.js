@@ -1,5 +1,6 @@
-function Board(context, world) {
+function Board(context, playerContext, world) {
     this.context = context;
+    this.pContext = playerContext;
     this.world = world;
     this.scaleFactor = 32;
 }
@@ -10,37 +11,17 @@ Board.prototype.drawMap = function(field) {
 	    var view = field.look(i, j);
 	    var bits = wall.toBits(view);
 	    var image = wall.typeFrom(bits);
-	    console.log('image ' + image);
 	    this.drawImageAt(this.context, {x: i, y: j}, image);
 	}
     }
 }
 
 Board.prototype.drawBorder = function(width, height) {
-    // this.drawVerticalAt(width, height, 'east');
-    // this.drawHorizontalAt(width, 0, 'w_north');
-    // this.drawHorizontalAt(width, height, 'w_south');
-    // this.drawVerticalAt(0, height, 'west');
 }
 
 Board.prototype.scale = function(point) {
     return {x : point.x * this.scaleFactor, y : point.y * this.scaleFactor};
 }
-
-Board.prototype.drawHorizontalAt = function(width, y, image) {
-    for (var i = 0; i < width; i++) {
-	this.drawImageAt(this.context, {x: i, y: y}, image);
-    }
-}
-
-Board.prototype.drawVerticalAt = function(x, height, orientation) {
-    this.drawImageAt(this.context, {x: x, y: 0}, 'w_north' + orientation);    
-    for (var i = 1; i < height; i++) {
-	this.drawImageAt(this.context, {x: x, y: i}, 'w_' + orientation);
-    }
-    this.drawImageAt(this.context, {x: x, y: height}, 'w_south' + orientation);
-}
-
 
 Board.prototype.drawImageAt = function(context, point, imageName) {
     var base_image = new Image();
@@ -82,8 +63,8 @@ Board.prototype.handleScore = function(message) {
 }
 
 Board.prototype.handleMove = function(message) {
-    this.removeDiggerFrom(this.context, message.from);
-    this.placeDiggerAt(this.context, message.to);
+    this.removeDiggerFrom(this.pContext, message.from);
+    this.placeDiggerAt(this.pContext, message.to);
 }
 
 Board.prototype.placeDiggerAt = function(context, point) {

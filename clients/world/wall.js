@@ -43,7 +43,6 @@ wallTypes["75"] = 'empty';
 wallTypes["77"] = 'empty';
 wallTypes["132"] = 'empty';
 wallTypes["257"] = 'empty';
-wallTypes["251"] = 'empty';
 wallTypes["66"] = 'empty';
 wallTypes["5"] = 'empty';
 wallTypes["6"] = 'empty';
@@ -92,7 +91,10 @@ wallTypes["89"] = 'arrow_left';
 wallTypes["308"] = 'arrow_right';
 wallTypes["372"] = 'arrow_right';
 
-wallTypes["446"] = 'solid';
+wallTypes["446"] = 'pipe_right';
+wallTypes["251"] = 'pipe_left';
+
+
 wallTypes["444"] = 'solid';
 wallTypes["506"] = 'solid';
 
