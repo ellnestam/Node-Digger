@@ -51,7 +51,6 @@ wallTypes["224"] = 'empty';
 wallTypes["260"] = 'empty';
 wallTypes["392"] = 'empty';
 wallTypes["162"] = 'empty';
-wallTypes["273"] = 'empty';
 wallTypes["266"] = 'empty';
 wallTypes["263"] = 'empty';
 wallTypes["3"] = 'empty';
@@ -85,6 +84,8 @@ wallTypes["201"] = 'empty';
 wallTypes["107"] = 'empty';
 wallTypes["105"] = 'empty';
 wallTypes["329"] = 'empty';
+wallTypes["2"] = 'empty';
+wallTypes["300"] = 'empty';
 
 wallTypes["89"] = 'arrow_left';
 
@@ -98,6 +99,7 @@ wallTypes["251"] = 'pipe_left';
 wallTypes["444"] = 'solid';
 wallTypes["506"] = 'solid';
 
+wallTypes["273"] = 'center';
 wallTypes["120"] = 'center';
 wallTypes["312"] = 'center';
 wallTypes["16"] = 'center';
@@ -106,8 +108,6 @@ wallTypes["81"] = 'center';
 wallTypes["84"] = 'center';
 wallTypes["320"] = 'center';
 wallTypes["345"] = 'center';
-wallTypes["300"] = 'center';
-wallTypes["2"] = 'center';
 wallTypes["28"] = 'center';
 wallTypes["20"] = 'center';
 wallTypes["213"] = 'center';

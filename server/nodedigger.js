@@ -30,7 +30,7 @@ function createWorld(wd) {
     // wd.putGoldAt({x:15, y:8}, 8); 
     wd.width = myMap.width;
     wd.height = myMap.height;
-    // wd.obstacles = [[5, 5], [10, 14]];
+    wd.obstacles = myMap.obstacles;
     wd.bank = {x: 8, y : 9};
 }
 

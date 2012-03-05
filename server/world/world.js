@@ -52,8 +52,18 @@ var world = {
 
     parse : function(string) {
 	var r = string.split("\n");
+	var obstacles = [];
+	for (var i = 0;  i < r.length; i++) {
+	    var cols = r[i].split('');
+	    for (var j = 0;  j < cols.length; j++) {
+		if (cols[j] === 'w') {
+		    obstacles.push([j, i]);
+		}
+	    }
+	}
 	return {
 	    rows: r,
+	    obstacles: obstacles,
 	    width: r[0].length, 
 	    height: r.length
 	};
