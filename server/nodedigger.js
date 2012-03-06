@@ -26,12 +26,10 @@ function createWorld(wd) {
     wd.map = wd.fileToString('fields/16.field');
     var myMap = wd.parse(wd.map);
 
-    // wd.putGoldAt({x:1, y:1}, 3); 
-    // wd.putGoldAt({x:15, y:8}, 8); 
     wd.width = myMap.width;
     wd.height = myMap.height;
     wd.obstacles = myMap.obstacles;
-    wd.bank = {x: 8, y : 9};
+    wd.bank = myMap.bank;
     wd.gold = myMap.gold;
 }
 
@@ -131,7 +129,6 @@ function drop(point, w, player) {
     if (w.goldAt(point) < 9 && player.load > 0) {
 
 	if (atBank(point, w)) {
-	    console.log('Katching');
 	    updateScore(score, player.playerName, 1);
 	    client.publish('/score', score);
 	} else {
@@ -148,7 +145,6 @@ function updateScore(score, player, amount) {
     } else {
 	score[player] = amount;
     }
-    console.dir(score);
 }
 
 function atBank(point, world) {

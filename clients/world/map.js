@@ -4,14 +4,17 @@ var world;
 var board;
 
 function initMap() {
-    var canvas = document.getElementById('myWorld');
-    var context = canvas.getContext('2d');
-
+    var context = getContext('myWorld');
     var playerContext = getContext('player');
     var goldContext = getContext('gold');
+    var scoreContext = getContext('score');
 
     world = new World();
-    board = new Board(context, playerContext, goldContext, world);
+    board = new Board(context, 
+		      playerContext, 
+		      goldContext, 
+		      scoreContext, 
+		      world);
     subscribe();
 }
 
@@ -32,7 +35,7 @@ function subscribe() {
 	world.visualize(board);
     });
 
-    var subscription = client.subscribe('/events', function(message) {
+    var subscription = client.subscribe('/score', function(message) {
 	board.handleScore(message);
     });
 

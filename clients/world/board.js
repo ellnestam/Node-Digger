@@ -1,7 +1,8 @@
-function Board(context, playerContext, goldContext, world) {
+function Board(context, playerContext, goldContext, scoreContext, world) {
     this.context = context;
     this.pContext = playerContext;
     this.gContext = goldContext;
+    this.sContext = scoreContext;
     this.world = world;
     this.scaleFactor = 32;
 }
@@ -51,7 +52,8 @@ Board.prototype.drawImageNugget = function(context, point, amount) {
 }
 
 Board.prototype.handleScore = function(message) {
-    // console.log(message.score);    
+    this.sContext.clearRect(500, 45, 100, 100);
+    this.sContext.fillText('Current score: ' + message['Diggah'], 500, 45);
 }
 
 Board.prototype.handleMove = function(message) {
@@ -73,5 +75,5 @@ Board.prototype.restoreTile = function(context, point) {
 }
 
 Board.prototype.drawBank = function(bank) {
-    this.drawImageAt(this.context, {x: bank.x, y: bank.y}, 'bank');
+    this.drawImageAt(this.gContext, {x: bank.x, y: bank.y}, 'bank');
 }
