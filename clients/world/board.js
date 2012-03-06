@@ -1,6 +1,7 @@
-function Board(context, playerContext, world) {
+function Board(context, playerContext, goldContext, world) {
     this.context = context;
     this.pContext = playerContext;
+    this.gContext = goldContext;
     this.world = world;
     this.scaleFactor = 32;
 }
@@ -48,7 +49,7 @@ Board.prototype.drawMatrices = function(matrices) {
 Board.prototype.drawMatrix = function(goldMatrix) {
     var nuggets = goldMatrix[1];
     var point = goldMatrix[0];
-    this.drawImageNugget(this.context, point, nuggets);
+    this.drawImageNugget(this.gContext, point, nuggets);
 }
 
 Board.prototype.drawImageNugget = function(context, point, amount) {
@@ -63,7 +64,8 @@ Board.prototype.handleScore = function(message) {
 }
 
 Board.prototype.handleMove = function(message) {
-    this.removeDiggerFrom(this.pContext, message.from);
+    // this.removeDiggerFrom(this.pContext, message.from);
+    this.restoreTile(this.pContext, message.from);
     this.placeDiggerAt(this.pContext, message.to);
 }
 
@@ -73,6 +75,13 @@ Board.prototype.placeDiggerAt = function(context, point) {
 
 Board.prototype.removeDiggerFrom = function(context, point) {
     this.drawImageAt(context, point, 'empty');
+}
+
+Board.prototype.restoreTile = function(context, point) {
+    context.clearRect(point.x * this.scaleFactor, 
+		      point.y * this.scaleFactor, 
+		      this.scaleFactor, 
+		      this.scaleFactor);
 }
 
 Board.prototype.drawObstacle = function(obstacle) {

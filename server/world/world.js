@@ -50,19 +50,32 @@ var world = {
 	return (p1.x == p2.x) && (p1.y == p2.y);
     },
 
+    isNumber : function(n) {
+	return !isNaN(parseFloat(n)) && isFinite(n);
+    },
+
     parse : function(string) {
 	var r = string.split("\n");
 	var obstacles = [];
+	var gold = [];
+
 	for (var i = 0;  i < r.length; i++) {
 	    var cols = r[i].split('');
 	    for (var j = 0;  j < cols.length; j++) {
-		if (cols[j] === 'w') {
+		var col = cols[j];
+		if (col === 'w') {
 		    obstacles.push([j, i]);
+		}
+
+		var maybeGold = parseInt(col);
+		if (this.isNumber(maybeGold)) {
+		    gold.push([{x: j, y: i}, maybeGold]);
 		}
 	    }
 	}
 	return {
 	    rows: r,
+	    gold: gold,
 	    obstacles: obstacles,
 	    width: r[0].length, 
 	    height: r.length

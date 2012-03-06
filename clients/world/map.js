@@ -7,12 +7,17 @@ function initMap() {
     var canvas = document.getElementById('myWorld');
     var context = canvas.getContext('2d');
 
-    var playerCanvas = document.getElementById('player');
-    var playerContext = playerCanvas.getContext('2d');
+    var playerContext = getContext('player');
+    var goldContext = getContext('gold');
 
     world = new World();
-    board = new Board(context, playerContext, world);
+    board = new Board(context, playerContext, goldContext, world);
     subscribe();
+}
+
+function getContext(name) {
+    var playerCanvas = document.getElementById(name);
+    return playerCanvas.getContext('2d');
 }
 
 function subscribe() {
