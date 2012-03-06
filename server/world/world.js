@@ -58,6 +58,7 @@ var world = {
 	var r = string.split("\n");
 	var obstacles = [];
 	var gold = [];
+	var bank = {x: 8, y : 9};
 
 	for (var i = 0;  i < r.length; i++) {
 	    var cols = r[i].split('');
@@ -71,10 +72,15 @@ var world = {
 		if (this.isNumber(maybeGold)) {
 		    gold.push([{x: j, y: i}, maybeGold]);
 		}
+
+		if (col === 'b') {
+		    bank = {x: j, y: i};
+		}
 	    }
 	}
 	return {
 	    rows: r,
+	    bank: bank,
 	    gold: gold,
 	    obstacles: obstacles,
 	    width: r[0].length, 
