@@ -48,11 +48,8 @@ var field = {
 		
 		return view;
 	    }
-
 	};
-
     },
-
 };
 
 

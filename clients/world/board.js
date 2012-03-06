@@ -17,9 +17,6 @@ Board.prototype.drawMap = function(field) {
     }
 }
 
-Board.prototype.drawBorder = function(width, height) {
-}
-
 Board.prototype.scale = function(point) {
     return {x : point.x * this.scaleFactor, y : point.y * this.scaleFactor};
 }
@@ -33,13 +30,7 @@ Board.prototype.drawImageAt = function(context, point, imageName) {
     }
 }
 
-Board.prototype.drawObstacles = function(obstacles) {
-    for (var o in obstacles) {
-	this.drawObstacle(obstacles[o]);
-    }
-}
-
-Board.prototype.drawMatrices = function(matrices) {
+Board.prototype.drawGoldMatrices = function(matrices) {
     for (var m in matrices) {
 	var matrix = matrices[m];
 	this.drawMatrix(matrices[m]);
@@ -64,7 +55,6 @@ Board.prototype.handleScore = function(message) {
 }
 
 Board.prototype.handleMove = function(message) {
-    // this.removeDiggerFrom(this.pContext, message.from);
     this.restoreTile(this.pContext, message.from);
     this.placeDiggerAt(this.pContext, message.to);
 }
@@ -78,14 +68,8 @@ Board.prototype.removeDiggerFrom = function(context, point) {
 }
 
 Board.prototype.restoreTile = function(context, point) {
-    context.clearRect(point.x * this.scaleFactor, 
-		      point.y * this.scaleFactor, 
-		      this.scaleFactor, 
-		      this.scaleFactor);
-}
-
-Board.prototype.drawObstacle = function(obstacle) {
-    this.drawImageAt(this.context, {x: obstacle[0], y: obstacle[1]}, 'center');
+    var p = this.scale(point);
+    context.clearRect(p.x, p.y, this.scaleFactor, this.scaleFactor);
 }
 
 Board.prototype.drawBank = function(bank) {

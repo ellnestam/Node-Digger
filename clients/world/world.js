@@ -2,9 +2,7 @@ function World() {
 }
 
 World.prototype.visualize = function(board) {
-    board.drawBorder(this.width, this.height);
-    board.drawMatrices(this.gold);
-    board.drawObstacles(this.obstacles);
+    board.drawGoldMatrices(this.gold);
     board.drawBank(this.bank);
     board.drawMap(this.map);
 }
