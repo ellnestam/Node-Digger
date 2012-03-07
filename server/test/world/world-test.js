@@ -41,4 +41,9 @@ buster.testCase("World behaviour", {
 	buster.assert.equals(field.obstacles, [[0, 0], [0, 1], [1, 0], [1,1]]);
     },
 
+    "Peek Adds to seen ground" : function() {
+	this.world.peekAt({x: 1, y: 9}, this.world, []);
+	buster.assert.equals(this.world.discovered.length, 9);
+    },
+
 })

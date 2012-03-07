@@ -89,7 +89,7 @@ function createPlayerEvent(player, message, world) {
     }
 
     if (message.action == 'look') {
-	console.log(message.action);
+	look(playerAt, world, player);
     }
 
     if (message.action == 'grab') {
@@ -119,6 +119,10 @@ function grab(point, w, player) {
 	w.removeGoldFrom(point, 1);
 	player.load += 1;
     }
+}
+
+function look(point, w, player) {
+    w.peekAt(point, w, player);
 }
 
 function canCarryMore(player) {

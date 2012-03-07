@@ -1,10 +1,13 @@
-function Board(context, playerContext, goldContext, scoreContext, world) {
-    this.context = context;
-    this.pContext = playerContext;
-    this.gContext = goldContext;
-    this.sContext = scoreContext;
+function Board(contexts, world, width, height) {
+    this.context = contexts.world;
+    this.pContext = contexts.digger;
+    this.gContext = contexts.gold;
+    this.sContext = contexts.score;
+    this.fog = contexts.fog;
     this.world = world;
     this.scaleFactor = 32;
+    this.width = width;
+    this.height = height;
 }
 
 Board.prototype.drawMap = function(field) {
@@ -16,6 +19,29 @@ Board.prototype.drawMap = function(field) {
 	    this.drawImageAt(this.context, {x: i, y: j}, image);
 	}
     }
+}
+
+Board.prototype.drawFog = function(field, discovered) {
+    this.restoreTile(this.fog);
+    for (var i = 0; i < field.width; i++) {
+	for (var j = 0; j < field.height; j++) {
+	    var point = {x: i, y: j};
+	    if (!this.pointPresent(point, discovered)) {
+		var image = 'shade';
+		this.drawImageAt(this.fog, point, image);
+	    }
+	}
+    }
+}
+
+Board.prototype.pointPresent = function(point, points) {
+    for (var p in points) {
+	var aPoint = points[p];
+	if (point.x === aPoint.x && point.y === aPoint.y) {
+	    return true;
+	}
+    }
+    return false;
 }
 
 Board.prototype.scale = function(point) {
@@ -53,7 +79,7 @@ Board.prototype.drawImageNugget = function(context, point, amount) {
 
 Board.prototype.handleScore = function(message) {
     this.sContext.save();
-    this.sContext.clearRect(0, 0, 800, 600);
+    this.sContext.clearRect(0, 0, this.width, this.height);
     this.sContext.fillText('Current score: ' + message['Diggah'], 500, 45);
     this.sContext.restore();
 }
@@ -72,8 +98,7 @@ Board.prototype.removeDiggerFrom = function(context, point) {
 }
 
 Board.prototype.restoreTile = function(context, point) {
-    var p = this.scale(point);
-    context.clearRect(p.x, p.y, this.scaleFactor, this.scaleFactor);
+    context.clearRect(0, 0, this.width, this.height);
 }
 
 Board.prototype.drawBank = function(bank) {

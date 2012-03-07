@@ -8,13 +8,19 @@ function initMap() {
     var playerContext = getContext('player');
     var goldContext = getContext('gold');
     var scoreContext = getContext('score');
+    var fogContext = getContext('fog');
+
+    var contexts = {
+	world : getContext('myWorld'),
+	digger : playerContext = getContext('player'),
+	gold : getContext('gold'),
+	score : getContext('score'),
+	fog : getContext('fog'),
+    }
 
     world = new World();
-    board = new Board(context, 
-		      playerContext, 
-		      goldContext, 
-		      scoreContext, 
-		      world);
+    board = new Board(contexts,	world, 800, 600);
+
     subscribe();
 }
 
@@ -30,8 +36,8 @@ function subscribe() {
     });
 
     var mapSubscription = client.subscribe('/map', function(message) {
-	var myMap = field.parse(message.map);
-	world.updateMap(message, myMap);
+	var playerMap = field.parse(message.map);
+	world.updateMap(message, playerMap);
 	world.visualize(board);
     });
 

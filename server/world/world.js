@@ -2,6 +2,7 @@ var fs = require('fs');
 
 var world = {
     gold : [],
+    discovered : [],
 
     pointPresent : function (point) {
 	for (var g in this.gold) {
@@ -36,6 +37,27 @@ var world = {
 	}
 	return this;
     },
+    
+    peekAt : function(point, world, player) {
+	for (var i = point.x - 1; i <= point.x + 1; i++) {
+	    for (var j = point.y - 1; j <= point.y + 1; j++) {
+		var p = {x: i, y: j};
+		var discovered = world.discovered;
+		if (this.unseen(p, discovered)) {
+		    discovered.push(p);
+		}
+	    }
+	}
+    },
+
+    unseen : function(point, discovered) {
+	for (var p = 0; p < discovered.length; p++) {
+	    if (this.samePoint(discovered[p], p)) {
+		return false;
+	    } 
+	}
+	return true;
+    },
 
     addTo : function(point, amount) {
 	for (var g in this.gold) {
@@ -58,7 +80,7 @@ var world = {
 	var r = string.split("\n");
 	var obstacles = [];
 	var gold = [];
-	var bank = {x: 8, y : 9};
+	var bank = {x: 0, y : 0};
 
 	for (var i = 0;  i < r.length; i++) {
 	    var cols = r[i].split('');
