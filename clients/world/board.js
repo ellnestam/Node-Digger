@@ -10,15 +10,38 @@ function Board(contexts, world, width, height) {
     this.height = height;
 }
 
-Board.prototype.drawMap = function(field) {
-    for (var i = 0; i < field.width; i++) {
-	for (var j = 0; j < field.height; j++) {
+Board.prototype.drawMap = function(field, gold, p) {
+    var cameraX = p.x - 1;
+    var cameraY = p.y - 1;
+    var x = 0;
+    this.restoreTile(this.context);
+    this.restoreTile(this.gContext);
+    for (var i = cameraX; i < cameraX + 10; i++) {
+	var y = 0;
+	for (var j = cameraY; j < cameraY + 10; j++) {
 	    var view = field.look(i, j);
 	    var bits = wall.toBits(view);
 	    var image = wall.typeFrom(bits);
-	    this.drawImageAt(this.context, {x: i, y: j}, image);
+	    var tile = {x: x, y: y};
+	    this.drawImageAt(this.gContext, tile, this.goldAt({x: i, y: j}, gold));
+	    this.drawImageAt(this.context, tile, image);
+	    y++;
+	}
+	x++;
+    }
+}
+
+Board.prototype.samePoint = function(p1, p2) {
+    return (p1.x == p2.x && p1.y == p2.y);
+}
+
+Board.prototype.goldAt = function(point, gold) {
+    for (var i = 0; i < gold.length; i++) {
+	if (this.samePoint(gold[i][0], point)) {
+	    return 'gold' + gold[i][1];
 	}
     }
+    return '';
 }
 
 Board.prototype.drawFog = function(field, discovered) {
@@ -49,11 +72,13 @@ Board.prototype.scale = function(point) {
 }
 
 Board.prototype.drawImageAt = function(context, point, imageName) {
-    var base_image = new Image();
-    var p = this.scale(point);
-    base_image.src = 'images/' + imageName + '.png';
-    base_image.onload = function() {
-	context.drawImage(base_image, p.x, p.y);
+    if (imageName.length > 0) {
+	var base_image = new Image();
+	var p = this.scale(point);
+	base_image.src = 'images/' + imageName + '.png';
+	base_image.onload = function() {
+	    context.drawImage(base_image, p.x, p.y);
+	}
     }
 }
 
@@ -85,19 +110,15 @@ Board.prototype.handleScore = function(message) {
 }
 
 Board.prototype.handleMove = function(message) {
-    this.restoreTile(this.pContext, message.from);
-    this.placeDiggerAt(this.pContext, message.to);
+    this.restoreTile(this.pContext);
+    this.placeDiggerAt(this.pContext, {x: 1, y: 1});
 }
 
 Board.prototype.placeDiggerAt = function(context, point) {
     this.drawImageAt(context, point, 'digger');
 }
 
-Board.prototype.removeDiggerFrom = function(context, point) {
-    this.drawImageAt(context, point, 'empty');
-}
-
-Board.prototype.restoreTile = function(context, point) {
+Board.prototype.restoreTile = function(context) {
     context.clearRect(0, 0, this.width, this.height);
 }
 

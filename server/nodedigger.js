@@ -49,11 +49,11 @@ function dispatch(message) {
 
     var p = players[0];
     var event = createPlayerEvent(p, message, wd);
-    client.publish('/events', event);
     client.publish('/map', wd);
+    client.publish('/events', event);
 
     players[0] = {x: event.to.x, 
-		  y: event.to.y, 
+		  y: event.to.y,
 		  playerName: message.playerName,
 		  load: event.load
 		 };

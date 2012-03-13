@@ -22,8 +22,15 @@ wallTypes["127"] = 'w_south';
 
 wallTypes["510"] = 'w_northwest';
 wallTypes["507"] = 'w_northeast';
-wallTypes["447"] = 'w_southwest';
+
+// To Change
+wallTypes["50"] = 'center';
+wallTypes["18"] = 'center';
+wallTypes["22"] = 'center';
+wallTypes["54"] = 'w_northeast_i';
+
 wallTypes["255"] = 'w_southeast';
+wallTypes["447"] = 'w_southwest';
 
 wallTypes["448"] = 'empty';
 wallTypes["258"] = 'empty';
@@ -91,6 +98,7 @@ wallTypes["89"] = 'arrow_left';
 
 wallTypes["308"] = 'arrow_right';
 wallTypes["372"] = 'arrow_right';
+wallTypes["48"] = 'arrow_right';
 
 wallTypes["446"] = 'pipe_right';
 wallTypes["251"] = 'pipe_left';

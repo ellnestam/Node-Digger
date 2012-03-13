@@ -38,6 +38,7 @@ $(document).bind('keydown', 'ctrl+down', function() {south()});
 $(document).bind('keydown', 'ctrl+left', function() {west()});
 $(document).bind('keydown', 'ctrl+right', function() {east()});
 
-$(document).bind('keydown', 'ctrl+shift+up', function() {look()});
-$(document).bind('keydown', 'ctrl+shift+left', function() {grab()});
-$(document).bind('keydown', 'ctrl+shift+right', function() {drop()});
+$(document).bind('keydown', 'ctrl+shift+up', function() {grab()});
+$(document).bind('keydown', 'ctrl+shift+down', function() {drop()});
+$(document).bind('keydown', 'ctrl+shift+right', function() {look()});
+$(document).bind('keydown', 'ctrl+shift+left', function() {look()});

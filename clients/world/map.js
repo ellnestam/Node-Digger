@@ -31,14 +31,14 @@ function getContext(name) {
 
 function subscribe() {
 
-    var subscription = client.subscribe('/events', function(message) {
-	board.handleMove(message);
-    });
-
     var mapSubscription = client.subscribe('/map', function(message) {
 	var playerMap = field.parse(message.map);
 	world.updateMap(message, playerMap);
-	world.visualize(board);
+    });
+
+    var subscription = client.subscribe('/events', function(message) {
+	world.visualize(board, message.to);
+	board.handleMove(message);
     });
 
     var subscription = client.subscribe('/score', function(message) {

@@ -1,11 +1,11 @@
 function World() {
 }
 
-World.prototype.visualize = function(board) {
-    board.drawGoldMatrices(this.gold);
-    board.drawBank(this.bank);
-    board.drawMap(this.map);
-    board.drawFog(this.map, this.discovered);
+World.prototype.visualize = function(board, point) {
+    // board.drawGoldMatrices(this.gold);
+    // board.drawBank(this.bank);
+    board.drawMap(this.map, this.gold, point);
+    // board.drawFog(this.map, this.discovered);
 }
 
 World.prototype.updateMap = function(message, map) {
