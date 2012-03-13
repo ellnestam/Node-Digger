@@ -21,8 +21,7 @@ Board.prototype.drawMap = function(field, gold, fog, p) {
 	var y = 0;
 	for (var j = cameraY; j < cameraY + 10; j++) {
 	    var view = field.look(i, j);
-	    var bits = wall.toBits(view);
-	    var image = wall.typeFrom(bits);
+	    var image = wall.determineFrom(view);
 	    var tile = {x: x, y: y};
 	    var position = {x: i, y: j};
 	    this.drawImageAt(this.gContext, tile, this.goldAt(position, gold));
@@ -32,10 +31,6 @@ Board.prototype.drawMap = function(field, gold, fog, p) {
 	}
 	x++;
     }
-}
-
-Board.prototype.samePoint = function(p1, p2) {
-    return (p1.x == p2.x && p1.y == p2.y);
 }
 
 Board.prototype.fogAt = function(point, fog) {
@@ -51,10 +46,13 @@ Board.prototype.goldAt = function(point, gold) {
     return '';
 }
 
+Board.prototype.samePoint = function(p1, p2) {
+    return (p1.x == p2.x && p1.y == p2.y);
+}
+
 Board.prototype.pointPresent = function(point, points) {
     for (var p in points) {
-	var aPoint = points[p];
-	if (point.x === aPoint.x && point.y === aPoint.y) {
+	if (this.samePoint(points[p], point)) {
 	    return true;
 	}
     }
@@ -76,17 +74,10 @@ Board.prototype.drawImageAt = function(context, point, imageName) {
     }
 }
 
-Board.prototype.drawImageNugget = function(context, point, amount) {
-    this.drawImageAt(context, point, 'empty');
-    if (amount > 0) {
-	this.drawImageAt(context, point, 'gold' + amount);
-    }
-}
-
 Board.prototype.handleScore = function(message) {
     this.sContext.save();
     this.sContext.clearRect(0, 0, this.width, this.height);
-    this.sContext.fillText('Current score: ' + message['Diggah'], 500, 45);
+    this.sContext.fillText('Current score: ' + message['Diggah'], 240, 45);
     this.sContext.restore();
 }
 

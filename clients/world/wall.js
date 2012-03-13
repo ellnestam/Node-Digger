@@ -127,6 +127,10 @@ wallTypes["56"] = 'center';
 
 
 var wall = {
+    determineFrom : function(view) {
+	return this.typeFrom(this.toBits(view));
+    },
+
     typeFrom : function(matrix) {
 	var x = 0;
 	for (var i = 0; i < matrix.length; i++) {
