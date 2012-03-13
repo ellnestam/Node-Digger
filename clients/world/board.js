@@ -10,12 +10,13 @@ function Board(contexts, world, width, height) {
     this.height = height;
 }
 
-Board.prototype.drawMap = function(field, gold, p) {
+Board.prototype.drawMap = function(field, gold, fog, p) {
     var cameraX = p.x - 1;
     var cameraY = p.y - 1;
     var x = 0;
     this.restoreTile(this.context);
     this.restoreTile(this.gContext);
+    this.restoreTile(this.fog);
     for (var i = cameraX; i < cameraX + 10; i++) {
 	var y = 0;
 	for (var j = cameraY; j < cameraY + 10; j++) {
@@ -23,8 +24,10 @@ Board.prototype.drawMap = function(field, gold, p) {
 	    var bits = wall.toBits(view);
 	    var image = wall.typeFrom(bits);
 	    var tile = {x: x, y: y};
-	    this.drawImageAt(this.gContext, tile, this.goldAt({x: i, y: j}, gold));
+	    var position = {x: i, y: j};
+	    this.drawImageAt(this.gContext, tile, this.goldAt(position, gold));
 	    this.drawImageAt(this.context, tile, image);
+	    this.drawImageAt(this.fog, tile, this.fogAt(position, fog));
 	    y++;
 	}
 	x++;
@@ -35,6 +38,10 @@ Board.prototype.samePoint = function(p1, p2) {
     return (p1.x == p2.x && p1.y == p2.y);
 }
 
+Board.prototype.fogAt = function(point, fog) {
+    return this.pointPresent(point, fog) ? '' : 'shade';
+}
+
 Board.prototype.goldAt = function(point, gold) {
     for (var i = 0; i < gold.length; i++) {
 	if (this.samePoint(gold[i][0], point)) {
@@ -42,19 +49,6 @@ Board.prototype.goldAt = function(point, gold) {
 	}
     }
     return '';
-}
-
-Board.prototype.drawFog = function(field, discovered) {
-    this.restoreTile(this.fog);
-    for (var i = 0; i < field.width; i++) {
-	for (var j = 0; j < field.height; j++) {
-	    var point = {x: i, y: j};
-	    if (!this.pointPresent(point, discovered)) {
-		var image = 'shade';
-		this.drawImageAt(this.fog, point, image);
-	    }
-	}
-    }
 }
 
 Board.prototype.pointPresent = function(point, points) {
@@ -80,19 +74,6 @@ Board.prototype.drawImageAt = function(context, point, imageName) {
 	    context.drawImage(base_image, p.x, p.y);
 	}
     }
-}
-
-Board.prototype.drawGoldMatrices = function(matrices) {
-    for (var m in matrices) {
-	var matrix = matrices[m];
-	this.drawMatrix(matrices[m]);
-    }
-}
-
-Board.prototype.drawMatrix = function(goldMatrix) {
-    var nuggets = goldMatrix[1];
-    var point = goldMatrix[0];
-    this.drawImageNugget(this.gContext, point, nuggets);
 }
 
 Board.prototype.drawImageNugget = function(context, point, amount) {
