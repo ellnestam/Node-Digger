@@ -1,8 +1,8 @@
 function Board(contexts, world, width, height) {
-    this.context = contexts.world;
+    this.ground = contexts.world;
     this.pContext = contexts.digger;
     this.gContext = contexts.gold;
-    this.sContext = contexts.score;
+    this.scoreBoard = contexts.score;
     this.fog = contexts.fog;
     this.world = world;
     this.scaleFactor = 32;
@@ -14,19 +14,23 @@ Board.prototype.drawMap = function(field, gold, fog, p) {
     var cameraX = p.x - 1;
     var cameraY = p.y - 1;
     var x = 0;
-    this.restoreTile(this.context);
+    this.restoreTile(this.ground);
     this.restoreTile(this.gContext);
     this.restoreTile(this.fog);
     for (var i = cameraX; i < cameraX + 10; i++) {
 	var y = 0;
 	for (var j = cameraY; j < cameraY + 10; j++) {
-	    var view = field.look(i, j);
-	    var image = wall.determineFrom(view);
-	    var tile = {x: x, y: y};
 	    var position = {x: i, y: j};
-	    this.drawImageAt(this.gContext, tile, this.goldAt(position, gold));
-	    this.drawImageAt(this.context, tile, image);
-	    this.drawImageAt(this.fog, tile, this.fogAt(position, fog));
+	    if (position.x > field.width - 1 || position.y > field.height - 1) {
+		this.drawImageAt(this.ground, tile, 'solid');
+	    } else {
+		var view = field.look(i, j);
+		var image = wall.determineFrom(view);
+		var tile = {x: x, y: y};
+		this.drawImageAt(this.gContext, tile, this.goldAt(position, gold));
+		this.drawImageAt(this.ground, tile, image);
+		this.drawImageAt(this.fog, tile, this.fogAt(position, fog));
+	    }
 	    y++;
 	}
 	x++;
@@ -75,10 +79,10 @@ Board.prototype.drawImageAt = function(context, point, imageName) {
 }
 
 Board.prototype.handleScore = function(message) {
-    this.sContext.save();
-    this.sContext.clearRect(0, 0, this.width, this.height);
-    this.sContext.fillText('Current score: ' + message['Diggah'], 240, 45);
-    this.sContext.restore();
+    this.scoreBoard.save();
+    this.scoreBoard.clearRect(0, 0, this.width, this.height);
+    this.scoreBoard.fillText('Current score: ' + message['Diggah'], 240, 45);
+    this.scoreBoard.restore();
 }
 
 Board.prototype.handleMove = function(message) {
@@ -91,7 +95,9 @@ Board.prototype.placeDiggerAt = function(context, point) {
 }
 
 Board.prototype.restoreTile = function(context) {
+    context.save();
     context.clearRect(0, 0, this.width, this.height);
+    context.restore();
 }
 
 Board.prototype.drawBank = function(bank) {
