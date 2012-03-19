@@ -1,11 +1,13 @@
-var http = require('http'),
-    faye = require('faye');
+var http = require('http');
+var faye = require('faye');
+var url = require('url');
 
 var port = 8000;
 
 var wd = require('./world/world.js');
 var ground = require('./world/ground.js');
 var player = require('./player/player.js');
+
 
 var bayeux = new faye.NodeAdapter({mount: '/nodedigger', timeout: 45});
 bayeux.listen(port);
@@ -20,12 +22,26 @@ var subscription = client.subscribe('/act', function(message) {
     dispatch(message);
 });
 
+var srv = http.createServer(function (req, res) {
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+    res.end('okay');
+    var path = url.parse(req.url).path;
+    
+    var commands = path.split("/");
+    console.log(commands);
+    var message = {playerName : commands[1],
+		   password: commands[2],
+		   
+};
+
+}).listen(1337);
+
 createWorld(wd);
 
 function createWorld(wd) {
     wd.map = wd.fileToString('fields/16.field');
     var myMap = wd.parse(wd.map);
-
+    
     wd.width = myMap.width;
     wd.height = myMap.height;
     wd.obstacles = myMap.obstacles;
@@ -33,6 +49,7 @@ function createWorld(wd) {
     wd.gold = myMap.gold;
 }
 
+var _world = wd.parse(wd.fileToString('fields/16.field'));
 
 
 var score = {};
@@ -48,8 +65,8 @@ function dispatch(message) {
     }
 
     var p = players[0];
-    var event = createPlayerEvent(p, message, wd);
-    client.publish('/map', wd);
+    var event = createPlayerEvent(p, message, _world);
+    client.publish('/map', _world);
     client.publish('/events', event);
 
     players[0] = {x: event.to.x, 
