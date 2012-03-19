@@ -14,7 +14,7 @@ bayeux.listen(port);
 
 var client = new faye.Client('http://localhost:' + port + '/nodedigger');
 
-var players = new Array();
+var players = addPlayers();
 
 var carryLimit = 3;
 
@@ -36,26 +36,23 @@ var srv = http.createServer(function (req, res) {
 
 }).listen(1337);
 
-createWorld(wd);
-
-function createWorld(wd) {
-    wd.map = wd.fileToString('fields/16.field');
-    var myMap = wd.parse(wd.map);
-    
-    wd.width = myMap.width;
-    wd.height = myMap.height;
-    wd.obstacles = myMap.obstacles;
-    wd.bank = myMap.bank;
-    wd.gold = myMap.gold;
-}
-
 var _world = wd.parse(wd.fileToString('fields/16.field'));
-
-
 var score = {};
 
+function addPlayers() {
+    var p = new Array();
+    p.push({playerName: 'Diggah', x: 1, y: 1, load : 0});
+    p.push({playerName: 'D2', x: 1, y: 1, load : 0});
+    p.push({playerName: 'D3', x: 1, y: 1, load : 0});
+    p.push({playerName: 'D3', x: 1, y: 1, load : 0});
+
+    return p;
+}
+
 function dispatch(message) {
-    if (!playerExists(message)) {
+    
+
+    if (!validPlayer(message)) {
 	players.push(
 	    {playerName: message.playerName,
 	     x: 1,
@@ -64,21 +61,32 @@ function dispatch(message) {
 	);
     }
 
-    var p = players[0];
+    var p = fetchPlayer(message);
     var event = createPlayerEvent(p, message, _world);
     client.publish('/map', _world);
     client.publish('/events', event);
 
-    players[0] = {x: event.to.x, 
-		  y: event.to.y,
-		  playerName: message.playerName,
-		  load: event.load
-		 };
+    players = updatePlayers(players, event, message);
 }
 
-function playerExists(message) {
+function updatePlayers(players, event, message) {
+    var p = new Array(players);
+    p[0] = {x: event.to.x,
+	    y: event.to.y,
+	    playerName: message.playerName,
+	    load: event.load
+	   };
+
+    return p;
+}
+
+function fetchPlayer(message) {
+    return players[0];
+}
+
+function validPlayer(message) {
     for (var p in players) {
-	if (players[p].name === message.playerName) {
+	if (players[p].playerName === message.playerName) {
 	    return true;
 	}
     }
