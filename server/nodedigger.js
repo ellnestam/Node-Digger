@@ -11,7 +11,7 @@ var player = require('./player/player.js');
 var bayeux = new faye.NodeAdapter({mount: '/nodedigger', timeout: 45}).listen(port);
 
 var client = new faye.Client('http://localhost:' + port + '/nodedigger');
-var _world = wd.parse(wd.fileToString('fields/16.field'));
+
 var score = {};
 var players = addPlayers();
 
@@ -37,26 +37,29 @@ var srv = http.createServer(function (req, res) {
 
 function addPlayers() {
     var p = new Array();
-    p.push(createPlayer('Diggah', '1234', 1, 1, 0));
-    p.push(createPlayer('Bot 1', '4321', 1, 1, 0));
+    var _w1 = wd.parse(wd.fileToString('fields/14.field'));
+    var _w2 = wd.parse(wd.fileToString('fields/16.field'));
+    p.push(createPlayer('Diggah', '1234', 1, 1, _w1, 0));
+    p.push(createPlayer('Bot 1', '4321', 1, 1, _w2, 0));
 
     return p;
 }
 
-function createPlayer(player, pwd, x, y, load) {
+function createPlayer(player, pwd, x, y, _world, load) {
     score[player] = 0;
     return {playerName: player,
 	    password: pwd,
 	    x: x,
 	    y: y,
+	    world: _world,
 	    load : load};
 }
 
 function dispatch(message) {
     if (validPlayer(message)) {
 	var p = fetchPlayer(message, players);
-	var event = createPlayerEvent(p, message, _world);
-	client.publish('/map', _world);
+	var event = createPlayerEvent(p, message);
+	client.publish('/map', p.world);
 	client.publish('/events', event);
 	players = updatePlayers(players, event, message);
     }
@@ -67,6 +70,7 @@ function updatePlayers(players, event, message) {
     for (var i = 0; i < p.length; i++) {
 	if (p[i].playerName === message.playerName) {
 	    p[i] = {playerName: message.playerName,
+		    world: p[i].world,
 		    x: event.to.x,
 		    y: event.to.y,
 		    load: event.load};
@@ -83,7 +87,7 @@ function fetchPlayer(message, players) {
 	}
     }
 }
-    
+
 function validPlayer(message) {
     for (var p in players) {
 	if (players[p].playerName === message.playerName) {
@@ -93,10 +97,11 @@ function validPlayer(message) {
     return false;
 }
 
-function createPlayerEvent(player, message, world) {
+function createPlayerEvent(player, message) {
     var playerAt = {x: player.x, y: player.y};
     var futurePosition = {x: player.x, y: player.y};
-    
+    var world = player.world;
+
     if (message.action == 'north') {
 	futurePosition.y -= 1;
     }
