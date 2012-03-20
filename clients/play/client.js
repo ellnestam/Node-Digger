@@ -29,7 +29,9 @@ function west() {
 }
 
 function act(action) {
-    var publication = client.publish('/act', {action: action, playerName: 'Diggah'});
+    var publication = client.publish('/act', {action    : action, 
+					      playerName: 'Diggah',
+					      password  : 'pwd'});
 }
 
 $(document).bind('keydown', 'ctrl+up', function() {north()});

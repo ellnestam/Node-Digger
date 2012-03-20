@@ -8,12 +8,11 @@ var wd = require('./world/world.js');
 var ground = require('./world/ground.js');
 var player = require('./player/player.js');
 
-
-var bayeux = new faye.NodeAdapter({mount: '/nodedigger', timeout: 45});
-bayeux.listen(port);
+var bayeux = new faye.NodeAdapter({mount: '/nodedigger', timeout: 45}).listen(port);
 
 var client = new faye.Client('http://localhost:' + port + '/nodedigger');
-
+var _world = wd.parse(wd.fileToString('fields/16.field'));
+var score = {};
 var players = addPlayers();
 
 var carryLimit = 3;
@@ -36,54 +35,55 @@ var srv = http.createServer(function (req, res) {
 
 }).listen(1337);
 
-var _world = wd.parse(wd.fileToString('fields/16.field'));
-var score = {};
-
 function addPlayers() {
     var p = new Array();
-    p.push({playerName: 'Diggah', x: 1, y: 1, load : 0});
-    p.push({playerName: 'D2', x: 1, y: 1, load : 0});
-    p.push({playerName: 'D3', x: 1, y: 1, load : 0});
-    p.push({playerName: 'D3', x: 1, y: 1, load : 0});
+    p.push(createPlayer('Diggah', '1234', 1, 1, 0));
+    p.push(createPlayer('Bot 1', '4321', 1, 1, 0));
 
     return p;
+}
+
+function createPlayer(player, pwd, x, y, load) {
+    score[player] = 0;
+    return {playerName: player,
+	    password: pwd,
+	    x: x,
+	    y: y,
+	    load : load};
 }
 
 function dispatch(message) {
-    
-
-    if (!validPlayer(message)) {
-	players.push(
-	    {playerName: message.playerName,
-	     x: 1,
-	     y: 1,
-	     load : 0}
-	);
+    if (validPlayer(message)) {
+	var p = fetchPlayer(message, players);
+	var event = createPlayerEvent(p, message, _world);
+	client.publish('/map', _world);
+	client.publish('/events', event);
+	players = updatePlayers(players, event, message);
     }
-
-    var p = fetchPlayer(message);
-    var event = createPlayerEvent(p, message, _world);
-    client.publish('/map', _world);
-    client.publish('/events', event);
-
-    players = updatePlayers(players, event, message);
 }
 
 function updatePlayers(players, event, message) {
-    var p = new Array(players);
-    p[0] = {x: event.to.x,
-	    y: event.to.y,
-	    playerName: message.playerName,
-	    load: event.load
-	   };
+    var p = players.slice();
+    for (var i = 0; i < p.length; i++) {
+	if (p[i].playerName === message.playerName) {
+	    p[i] = {playerName: message.playerName,
+		    x: event.to.x,
+		    y: event.to.y,
+		    load: event.load};
+	}
+    }
 
     return p;
 }
 
-function fetchPlayer(message) {
-    return players[0];
+function fetchPlayer(message, players) {
+    for (var i = 0; i < players.length; i++) {
+	if (players[i].playerName === message.playerName) {
+	    return players[i];
+	}
+    }
 }
-
+    
 function validPlayer(message) {
     for (var p in players) {
 	if (players[p].playerName === message.playerName) {
@@ -169,11 +169,7 @@ function drop(point, w, player) {
 }
 
 function updateScore(score, player, amount) {
-    if (score[player]) {
-	score[player] += amount;
-    } else {
-	score[player] = amount;
-    }
+    score[player] += amount;
 }
 
 function atBank(point, world) {
