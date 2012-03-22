@@ -21,24 +21,56 @@ var subscription = client.subscribe('/act', function(message) {
     dispatch(message);
 });
 
+
+var commands = {
+    next : function(message) {
+	console.log(message);
+	if (validPlayer(message)) {
+	    var p = fetchPlayer(message, players);
+	    updateWorld(wd, p);
+	    return message.playerName + ' found';
+	}
+    },
+};
+
+function updateWorld(wd, player) {
+    var no =  determineMap(player);
+    player.world = wd.parse(wd.fileToString('fields/' + no + '.field'));
+    player.load = 0;
+    player.x = 1;
+    player.y = 1;
+    player.fieldNo = no;
+}
+
+function determineMap(player) {
+    current = player.fieldNo;
+    if (current > 30) {
+	return 1;
+    }
+    return current + 1;
+}
+
+
 var srv = http.createServer(function (req, res) {
     res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('okay');
     var path = url.parse(req.url).path;
     
-    var commands = path.split("/");
-    console.log(commands);
-    var message = {playerName : commands[1],
-		   password: commands[2],
-		   
-};
+    var args = path.split("/");
+    var message = {playerName : args[1],
+		   password: args[2],
+		   command: args[3],
+		  };
+    
+    var c = commands[message.command];
+    res.end(c.call(this, message));
+    
 
 }).listen(1337);
 
 function addPlayers() {
     var p = new Array();
-    var _w1 = wd.parse(wd.fileToString('fields/14.field'));
-    var _w2 = wd.parse(wd.fileToString('fields/16.field'));
+    var _w1 = wd.parse(wd.fileToString('fields/1.field'));
+    var _w2 = wd.parse(wd.fileToString('fields/1.field'));
     p.push(createPlayer('Diggah', '1234', 1, 1, _w1, 0));
     p.push(createPlayer('Bot 1', '4321', 1, 1, _w2, 0));
 
@@ -48,6 +80,7 @@ function addPlayers() {
 function createPlayer(player, pwd, x, y, _world, load) {
     score[player] = 0;
     return {playerName: player,
+	    fieldNo : 1,
 	    password: pwd,
 	    x: x,
 	    y: y,
@@ -73,6 +106,7 @@ function updatePlayers(players, event, message) {
 		    world: p[i].world,
 		    x: event.to.x,
 		    y: event.to.y,
+		    fieldNo : p[i].fieldNo,
 		    load: event.load};
 	}
     }
