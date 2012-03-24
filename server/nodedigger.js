@@ -31,7 +31,51 @@ var commands = {
 	    return message.playerName + ' found';
 	}
     },
+
+    grab : function(message) {
+	act('grab', message, players);
+    },
+
+    drop : function(message) {
+	act('drop', message, players);
+    },
+	   
+
+    east : function(message) {
+	act('east', message, players);
+    },
+
+    west : function(message) {
+	act('west', message, players);
+    },
+
+    north : function(message) {
+	act('north', message, players);
+    },
+
+    south : function(message) {
+	act('south', message, players);
+    },
+
+    look : function(message) {
+	return "www\nw..\nw..\n";
+    }
+
+
 };
+
+function act(direction, message, players) {
+    if (validPlayer(message)) {
+	var p = fetchPlayer(message, players);
+	var event = {
+	    action : direction,
+	    playerName : p.playerName,
+	    password : p.password,
+	};
+	dispatch(event);
+    }
+}
+
 
 function updateWorld(wd, player) {
     var no =  determineMap(player);
@@ -62,9 +106,10 @@ var srv = http.createServer(function (req, res) {
 		  };
     
     var c = commands[message.command];
-    res.end(c.call(this, message));
-    
-
+    if (typeof c != 'undefined') {
+	res.end(c.call(this, message));	
+    }
+    res.end('Unrecognized command\n');
 }).listen(1337);
 
 function addPlayers() {
@@ -89,6 +134,7 @@ function createPlayer(player, pwd, x, y, _world, load) {
 }
 
 function dispatch(message) {
+    console.dir(message);
     if (validPlayer(message)) {
 	var p = fetchPlayer(message, players);
 	var event = createPlayerEvent(p, message);
