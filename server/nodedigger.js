@@ -24,7 +24,6 @@ var subscription = client.subscribe('/act', function(message) {
 
 var commands = {
     next : function(message) {
-	console.log(message);
 	if (validPlayer(message)) {
 	    var p = fetchPlayer(message, players);
 	    updateWorld(wd, p);
@@ -38,8 +37,7 @@ var commands = {
 
     drop : function(message) {
 	act('drop', message, players);
-    },
-	   
+    },  
 
     east : function(message) {
 	act('east', message, players);
@@ -58,7 +56,16 @@ var commands = {
     },
 
     look : function(message) {
-	return "www\nw..\nw..\n";
+	if (validPlayer(message)) {
+	    var p = fetchPlayer(message, players);
+	    act('look', message, players);
+	    var x = p.x;
+	    var y = p.y;
+	    return p.world.rows[y -1].substring(x - 1, x + 2) + '\n' 
+		+ p.world.rows[y].substring(x - 1, x + 2) + '\n'
+		+ p.world.rows[y+1].substring(x - 1, x + 2) + '\n';
+	}
+	return "";
     }
 
 
