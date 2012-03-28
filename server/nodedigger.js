@@ -124,7 +124,7 @@ function addPlayers() {
     var _w1 = wd.parse(wd.fileToString('fields/1.field'));
     var _w2 = wd.parse(wd.fileToString('fields/1.field'));
     p.push(createPlayer('Diggah', '1234', 1, 1, _w1, 0));
-    p.push(createPlayer('Bot 1', '4321', 1, 1, _w2, 0));
+    p.push(createPlayer('Bot_1', '4321', 1, 1, _w2, 0));
 
     return p;
 }
@@ -141,7 +141,6 @@ function createPlayer(player, pwd, x, y, _world, load) {
 }
 
 function dispatch(message) {
-    console.dir(message);
     if (validPlayer(message)) {
 	var p = fetchPlayer(message, players);
 	var event = createPlayerEvent(p, message);

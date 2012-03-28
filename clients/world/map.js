@@ -4,29 +4,31 @@ var world;
 var board;
 
 function initMap() {
-    var context = getContext('myWorld');
-    var playerContext = getContext('player');
-    var goldContext = getContext('gold');
-    var scoreContext = getContext('score');
-    var fogContext = getContext('fog');
 
     var contexts = {
-	world : getContext('myWorld'),
-	digger : playerContext = getContext('player'),
-	gold : getContext('gold'),
-	score : getContext('score'),
-	fog : getContext('fog'),
-    }
+	world : createContext(30, 40, 0, 'land', '#p1'),
+	gold : createContext(30, 40, 1, 'gold', '#p1'),
+	digger : createContext(30, 40, 2, 'player', '#p1'),
+	score : createContext(30, 40, 1, 'score', '#p1'),
+	fog : createContext(30, 40, 1, 'fog', '#p1'),
+    };
 
     world = new World();
-    board = new Board(contexts,	world, 800, 600);
+    board = new Board(contexts,	world, 400, 300);
 
     subscribe();
 }
 
-function getContext(name) {
-    var playerCanvas = document.getElementById(name);
-    return playerCanvas.getContext('2d');
+function createContext(x, y, zIndex, name, div) {
+    var ctx = $( '<canvas />', 
+		 {id: name})
+	.css('position', 'absolute')
+	.css('z-index', zIndex)
+	.css('left', x)
+	.css('top', y);
+    
+    $(div).append(ctx[0]);
+    return ctx[0].getContext('2d');
 }
 
 function subscribe() {

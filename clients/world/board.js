@@ -95,9 +95,9 @@ Board.prototype.placeDiggerAt = function(context, point) {
 }
 
 Board.prototype.restoreTile = function(context) {
-    context.save();
+    // context.save();
     context.clearRect(0, 0, this.width, this.height);
-    context.restore();
+    // context.restore();
 }
 
 Board.prototype.drawBank = function(bank) {
