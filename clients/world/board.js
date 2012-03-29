@@ -1,13 +1,15 @@
 function Board(contexts, world, width, height) {
     this.ground = contexts.world;
     this.pContext = contexts.digger;
-    this.gContext = contexts.gold;
+    this.gold = contexts.gold;
     this.scoreBoard = contexts.score;
     this.fog = contexts.fog;
     this.world = world;
     this.scaleFactor = 32;
     this.width = width;
     this.height = height;
+    
+    this.imgs = {};
 }
 
 Board.prototype.drawMap = function(field, gold, fog, p) {
@@ -15,7 +17,7 @@ Board.prototype.drawMap = function(field, gold, fog, p) {
     var cameraY = p.y - 1;
     var x = 0;
     this.restoreTile(this.ground);
-    this.restoreTile(this.gContext);
+    this.restoreTile(this.gold);
     this.restoreTile(this.fog);
     for (var i = cameraX; i < cameraX + 10; i++) {
 	var y = 0;
@@ -27,7 +29,7 @@ Board.prototype.drawMap = function(field, gold, fog, p) {
 		var view = field.look(i, j);
 		var image = wall.determineFrom(view);
 		var tile = {x: x, y: y};
-		this.drawImageAt(this.gContext, tile, this.goldAt(position, gold));
+		this.drawImageAt(this.gold, tile, this.goldAt(position, gold));
 		this.drawImageAt(this.ground, tile, image);
 		this.drawImageAt(this.fog, tile, this.fogAt(position, fog));
 	    }
@@ -69,12 +71,14 @@ Board.prototype.scale = function(point) {
 
 Board.prototype.drawImageAt = function(context, point, imageName) {
     if (imageName.length > 0) {
-	var base_image = new Image();
-	var p = this.scale(point);
-	base_image.src = 'images/' + imageName + '.png';
-	base_image.onload = function() {
-	    context.drawImage(base_image, p.x, p.y);
+	if (this.imgs[imageName] === undefined) {
+	    var base_image = new Image();
+	    base_image.src = 'images/' + imageName + '.png';
+	    this.imgs[imageName] = base_image;
 	}
+	
+	var p = this.scale(point);
+	context.drawImage(this.imgs[imageName], p.x, p.y);
     }
 }
 
@@ -95,11 +99,11 @@ Board.prototype.placeDiggerAt = function(context, point) {
 }
 
 Board.prototype.restoreTile = function(context) {
-    // context.save();
+    context.save();
     context.clearRect(0, 0, this.width, this.height);
-    // context.restore();
+    context.restore();
 }
 
 Board.prototype.drawBank = function(bank) {
-    this.drawImageAt(this.gContext, {x: bank.x, y: bank.y}, 'bank');
+    this.drawImageAt(this.gold, {x: bank.x, y: bank.y}, 'bank');
 }

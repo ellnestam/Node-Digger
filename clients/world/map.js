@@ -14,7 +14,7 @@ function initMap() {
     };
 
     world = new World();
-    board = new Board(contexts,	world, 400, 300);
+    board = new Board(contexts,	world, 800, 600);
 
     subscribe();
 }
