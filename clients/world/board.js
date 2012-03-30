@@ -5,7 +5,7 @@ function Board(contexts, world, width, height) {
     this.scoreBoard = contexts.score;
     this.fog = contexts.fog;
     this.world = world;
-    this.scaleFactor = 32;
+    this.scaleFactor = 20;
     this.width = width;
     this.height = height;
     
