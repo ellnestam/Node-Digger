@@ -42,6 +42,7 @@ wallTypes["255"] = 'w_southeast';
 wallTypes["447"] = 'w_southwest';
 
 wallTypes["216"] = 'w_southwest_i';
+wallTypes["432"] = 'w_southeast_i';
 
 wallTypes["448"] = 'empty';
 wallTypes["258"] = 'empty';
