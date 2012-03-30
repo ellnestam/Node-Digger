@@ -42,6 +42,10 @@ var field = {
 		    x++;
 		}
 
+		if (row_3.length < 1) {
+		    row_3 = extraRow;
+		}
+
 		var view = [row_1.substr(x-1, 3).split(''),
 			    row_2.substr(x-1, 3).split(''),
 			    row_3.substr(x-1, 3).split('')];
