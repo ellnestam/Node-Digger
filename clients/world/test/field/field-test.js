@@ -37,6 +37,25 @@ buster.testCase("Field behaviour", {
 		    ['w', 'w', 'w']];
 
 	buster.assert.equals(this.world.look(7, 4), view); 
+    },
+
+    "South wall" : function() {
+
+	var f = "wwwwwwwwwwwww\n";
+	f += "wbww3333...1w\n";
+	f += "w.ww5wwwwww.w\n";
+	f += "w.ww77899ww.w\n";
+	f += "w.wwwwwwwww.w\n";
+	f += "w1.........1w\n";
+	f += "wwwwwwwwwwwww\n";
+
+	var w = field.parse(f); 
+
+	var view = [['.', '1', 'w'],
+		    ['w', 'w', 'w'],
+		    ['w', 'w', 'w']];
+	
+	buster.assert.equals(w.look(11, 6), view); 
     }
 
 
