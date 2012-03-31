@@ -3,6 +3,8 @@ var client = new Faye.Client('http://localhost:8000/nodedigger');
 var world;
 var board;
 
+
+
 function initMap() {
 
     var contexts = {
@@ -36,12 +38,12 @@ function createContext(x, y, zIndex, name, div) {
 function subscribe() {
 
     var mapSubscription = client.subscribe('/map', function(message) {
-	var playerMap = field.parse(message.map);
-	world.updateMap(message, playerMap);
+	// var playerMap = field.parse(message.map);
+	// world.updateMap(message, playerMap, board);
     });
 
     var subscription = client.subscribe('/events', function(message) {
-	world.visualize(board, message.to);
+	world.visualize(board, message.to, message.world);
 	board.handleMove(message);
     });
 

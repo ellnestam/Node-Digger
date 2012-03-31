@@ -221,6 +221,7 @@ function createPlayerEvent(player, message) {
 	load: player.load,
 	from: playerAt,
 	to: playerAt,
+	world: world,
     }
 
     if (ground.validMove(futurePosition, world)) {
