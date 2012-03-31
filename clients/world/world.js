@@ -2,7 +2,6 @@ function World() {
 }
 
 World.prototype.visualize = function(board, point) {
-    // board.drawBank(this.bank);
     board.drawMap(this.map, this.gold, this.discovered, point);
 }
 

@@ -1,10 +1,12 @@
 function Board(contexts, world, width, height) {
+    
     this.ground = contexts.world;
     this.pContext = contexts.digger;
     this.gold = contexts.gold;
     this.scoreBoard = contexts.score;
     this.fog = contexts.fog;
     this.world = world;
+
     this.scaleFactor = 20;
     this.width = width;
     this.height = height;
