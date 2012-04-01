@@ -1,9 +1,6 @@
 var client = new Faye.Client('http://localhost:8000/nodedigger');
 
-var world;
-var board;
-
-
+var boards = {};
 
 function initMap() {
 
@@ -15,9 +12,8 @@ function initMap() {
 	fog : createContext(30, 40, 1, 'fog', '#p1'),
     };
 
-    world = new World();
-    board = new Board(contexts,	world, 800, 600);
-
+    var board = new Board(contexts, 800, 600);
+    boards[p1] = board;
 
 
     subscribe();
@@ -37,18 +33,16 @@ function createContext(x, y, zIndex, name, div) {
 
 function subscribe() {
 
-    var mapSubscription = client.subscribe('/map', function(message) {
-	// var playerMap = field.parse(message.map);
-	// world.updateMap(message, playerMap, board);
-    });
-
     var subscription = client.subscribe('/events', function(message) {
-	world.visualize(board, message.to, message.world);
-	board.handleMove(message);
+	var w = message.world;
+	var b = boardFor(message);
+	b.drawMap(field.parse(w.map), w.gold, w.discovered, message.to);
+	b.handleMove(message);
     });
 
     var subscription = client.subscribe('/score', function(message) {
-	board.handleScore(message);
+	var b = boardFor(message);
+	b.handleScore(message);
     });
 
     subscription.callback(function() {
@@ -59,3 +53,8 @@ function subscribe() {
 	alert(error.message);
     });
 }
+
+function boardFor(message) {
+    return boards[p1];
+}
+
