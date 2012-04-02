@@ -119,12 +119,27 @@ var srv = http.createServer(function (req, res) {
     res.end('Unrecognized command\n');
 }).listen(1337);
 
+var admin = http.createServer(function (req, res) {
+    res.writeHead(200, {'Content-Type' : 'text/plain',
+			'Access-Control-Allow-Origin' : '*'});
+
+    var path = url.parse(req.url).path;
+    
+    var playerNames = new Array();
+    for (var p in players) {
+	var player = players[p];
+	playerNames.push(player.playerName);
+    }
+    res.end('' + playerNames);
+}).listen(1338);
+
+
 function addPlayers() {
     var p = new Array();
     var _w1 = wd.parse(wd.fileToString('fields/1.field'));
     var _w2 = wd.parse(wd.fileToString('fields/1.field'));
     p.push(createPlayer('Diggah', '1234', 1, 1, _w1, 0));
-    p.push(createPlayer('Bot_1', '4321', 1, 1, _w2, 0));
+    p.push(createPlayer('SupaScoop', '4321', 1, 1, _w2, 0));
 
     return p;
 }

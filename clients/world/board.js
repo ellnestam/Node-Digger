@@ -1,12 +1,10 @@
 function Board(contexts, width, height) {
-    
     this.ground = contexts.world;
-    this.pContext = contexts.digger;
+    this.digger = contexts.digger;
     this.gold = contexts.gold;
     this.scoreBoard = contexts.score;
     this.fog = contexts.fog;
-    // this.world = world;
-
+    
     this.scaleFactor = 20;
     this.width = width;
     this.height = height;
@@ -55,7 +53,7 @@ Board.prototype.goldAt = function(point, gold) {
 }
 
 Board.prototype.samePoint = function(p1, p2) {
-    return (p1.x == p2.x && p1.y == p2.y);
+    return p1.x == p2.x && p1.y == p2.y;
 }
 
 Board.prototype.pointPresent = function(point, points) {
@@ -87,13 +85,13 @@ Board.prototype.drawImageAt = function(context, point, imageName) {
 Board.prototype.handleScore = function(message) {
     this.scoreBoard.save();
     this.scoreBoard.clearRect(0, 0, this.width, this.height);
-    this.scoreBoard.fillText('Current score: ' + message['Diggah'], 240, 45);
+    this.scoreBoard.fillText('Current score: ' + message['Diggah'], 140, 25);
     this.scoreBoard.restore();
 }
 
 Board.prototype.handleMove = function(message) {
-    this.restoreTile(this.pContext);
-    this.placeDiggerAt(this.pContext, {x: 1, y: 1});
+    this.restoreTile(this.digger);
+    this.placeDiggerAt(this.digger, {x: 1, y: 1});
 }
 
 Board.prototype.placeDiggerAt = function(context, point) {

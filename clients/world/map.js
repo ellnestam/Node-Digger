@@ -4,19 +4,34 @@ var boards = {};
 
 function initMap() {
 
-    var contexts = {
-	world : createContext(30, 40, 0, 'land', '#p1'),
-	gold : createContext(30, 40, 1, 'gold', '#p1'),
-	digger : createContext(30, 40, 2, 'player', '#p1'),
-	score : createContext(30, 40, 1, 'score', '#p1'),
-	fog : createContext(30, 40, 1, 'fog', '#p1'),
-    };
-
-    var board = new Board(contexts, 800, 600);
-    boards[p1] = board;
-
-
+    $().ready(function(){ 
+	var url = 'http://localhost:1338';
+	$.get(url, function(data) {
+	    var players = data.split(',');
+	    var i = 1;
+	    for (var p in players) {
+		var player = players[p];
+		boards[player] = new Board(createContexts('#p' + i), 300, 250);
+		i++;
+	    }
+	});
+    });    
+    
+    /* boards['Diggah'] = new Board(createContexts('#p1'), 300, 250);
+    boards['SupaScoop'] = new Board(createContexts('#p2'), 300, 250);
+    boards['SupaScoop'] = new Board(createContexts('#p3'), 300, 250);
+    boards['Diggah'] = new Board(createContexts('#p4'), 300, 250);*/
     subscribe();
+}
+
+function createContexts(divName) {
+    return {
+	world : createContext(30, 40, 0, 'land', divName),
+	gold : createContext(30, 40, 1, 'gold', divName),
+	digger : createContext(30, 40, 2, 'player', divName),
+	score : createContext(30, 40, 1, 'score', divName),
+	fog : createContext(30, 40, 1, 'fog', divName),
+    };
 }
 
 function createContext(x, y, zIndex, name, div) {
@@ -41,7 +56,7 @@ function subscribe() {
     });
 
     var subscription = client.subscribe('/score', function(message) {
-	var b = boardFor(message);
+	var b = boardFor('Diggah');
 	b.handleScore(message);
     });
 
@@ -55,6 +70,7 @@ function subscribe() {
 }
 
 function boardFor(message) {
-    return boards[p1];
+    console.dir(message.playerName);
+    return boards[message.playerName];
 }
 
