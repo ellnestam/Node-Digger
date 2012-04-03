@@ -29,30 +29,31 @@ var commands = {
 	    updateWorld(wd, p);
 	    return 'OK\n';
 	}
+	return 'Not OK\n';
     },
 
     grab : function(message) {
-	act('grab', message, players);
+	return act('grab', message, players);
     },
 
     drop : function(message) {
-	act('drop', message, players);
+	return act('drop', message, players);
     },  
 
     east : function(message) {
-	act('east', message, players);
+	return act('east', message, players);
     },
 
     west : function(message) {
-	act('west', message, players);
+	return act('west', message, players);
     },
 
     north : function(message) {
-	act('north', message, players);
+	return act('north', message, players);
     },
 
     south : function(message) {
-	act('south', message, players);
+	return act('south', message, players);
     },
 
     look : function(message) {
@@ -65,7 +66,7 @@ var commands = {
 		+ p.world.rows[y].substring(x - 1, x + 2) + '\n'
 		+ p.world.rows[y+1].substring(x - 1, x + 2) + '\n';
 	}
-	return "Not OK";
+	return "Not OK\n";
     }
 };
 
@@ -77,8 +78,9 @@ function act(direction, message, players) {
 	    playerName : p.playerName,
 	    password : p.password,
 	};
-	dispatch(event);
+	return dispatch(event);
     }
+    return 'Not OK\n';
 }
 
 
@@ -163,7 +165,9 @@ function dispatch(message) {
 	client.publish('/map', p.world);
 	client.publish('/events', event);
 	players = updatePlayers(players, event, message);
+	return 'OK\n';
     }
+    return 'Not OK\n';
 }
 
 function updatePlayers(players, event, message) {
