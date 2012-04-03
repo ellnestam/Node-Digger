@@ -138,8 +138,12 @@ function addPlayers() {
     var p = new Array();
     var _w1 = wd.parse(wd.fileToString('fields/1.field'));
     var _w2 = wd.parse(wd.fileToString('fields/1.field'));
+    var _w3 = wd.parse(wd.fileToString('fields/1.field'));
+    var _w4 = wd.parse(wd.fileToString('fields/1.field'));
     p.push(createPlayer('Diggah', '1234', 1, 1, _w1, 0));
     p.push(createPlayer('SupaScoop', '4321', 1, 1, _w2, 0));
+    p.push(createPlayer('Asteroid', '3333', 1, 1, _w3, 0));
+    p.push(createPlayer('Rosetta', '4444', 1, 1, _w3, 0));
 
     return p;
 }

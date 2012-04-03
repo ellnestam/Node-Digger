@@ -19,9 +19,9 @@ Board.prototype.drawMap = function(field, gold, fog, p) {
     this.restoreTile(this.ground);
     this.restoreTile(this.gold);
     this.restoreTile(this.fog);
-    for (var i = cameraX; i < cameraX + 10; i++) {
+    for (var i = cameraX; i < cameraX + 15; i++) {
 	var y = 0;
-	for (var j = cameraY; j < cameraY + 10; j++) {
+	for (var j = cameraY; j < cameraY + 15; j++) {
 	    var position = {x: i, y: j};
 	    if (position.x > field.width - 1 || position.y > field.height - 1) {
 		this.drawImageAt(this.ground, tile, 'solid');
