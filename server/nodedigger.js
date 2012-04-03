@@ -27,7 +27,7 @@ var commands = {
 	if (validPlayer(message)) {
 	    var p = fetchPlayer(message, players);
 	    updateWorld(wd, p);
-	    return message.playerName + ' found';
+	    return 'OK\n';
 	}
     },
 
@@ -57,18 +57,16 @@ var commands = {
 
     look : function(message) {
 	if (validPlayer(message)) {
-	    var p = fetchPlayer(message, players);
 	    act('look', message, players);
+	    var p = fetchPlayer(message, players);
 	    var x = p.x;
 	    var y = p.y;
 	    return p.world.rows[y -1].substring(x - 1, x + 2) + '\n' 
 		+ p.world.rows[y].substring(x - 1, x + 2) + '\n'
 		+ p.world.rows[y+1].substring(x - 1, x + 2) + '\n';
 	}
-	return "";
+	return "Not OK";
     }
-
-
 };
 
 function act(direction, message, players) {
@@ -136,27 +134,26 @@ var admin = http.createServer(function (req, res) {
 
 function addPlayers() {
     var p = new Array();
-    var _w1 = wd.parse(wd.fileToString('fields/1.field'));
-    var _w2 = wd.parse(wd.fileToString('fields/1.field'));
-    var _w3 = wd.parse(wd.fileToString('fields/1.field'));
-    var _w4 = wd.parse(wd.fileToString('fields/1.field'));
-    p.push(createPlayer('Diggah', '1234', 1, 1, _w1, 0));
-    p.push(createPlayer('SupaScoop', '4321', 1, 1, _w2, 0));
-    p.push(createPlayer('Asteroid', '3333', 1, 1, _w3, 0));
-    p.push(createPlayer('Rosetta', '4444', 1, 1, _w3, 0));
+
+    var rows = wd.fileToString('players').split('\n');
+    for (var r in rows) {
+	var playerAndPwd = rows[r].split(':');
+	p.push(createPlayer(playerAndPwd[0], playerAndPwd[1], 1, 1));	
+    }
 
     return p;
 }
 
-function createPlayer(player, pwd, x, y, _world, load) {
+function createPlayer(player, pwd, x, y) {
     score[player] = 0;
+    var _w = wd.parse(wd.fileToString('fields/1.field'));
     return {playerName: player,
 	    fieldNo : 1,
 	    password: pwd,
 	    x: x,
 	    y: y,
-	    world: _world,
-	    load : load};
+	    world: _w,
+	    load : 0};
 }
 
 function dispatch(message) {
@@ -174,6 +171,7 @@ function updatePlayers(players, event, message) {
     for (var i = 0; i < p.length; i++) {
 	if (p[i].playerName === message.playerName) {
 	    p[i] = {playerName: message.playerName,
+		    password: message.password,
 		    world: p[i].world,
 		    x: event.to.x,
 		    y: event.to.y,
@@ -194,8 +192,11 @@ function fetchPlayer(message, players) {
 }
 
 function validPlayer(message) {
-    for (var p in players) {
-	if (players[p].playerName === message.playerName) {
+    for (var i in players) {
+	var p = players[i];
+	if (p.playerName === message.playerName 
+	    && p.password === message.password
+	   ) {
 	    return true;
 	}
     }
@@ -239,6 +240,7 @@ function createPlayerEvent(player, message) {
 	playerName: player.playerName, 
 	load: player.load,
 	from: playerAt,
+	password: player.password,
 	to: playerAt,
 	world: world,
     }
