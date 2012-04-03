@@ -42,7 +42,7 @@ var world = {
 
 	    goldAt : function (point) {
 		for (var g in this.gold) {
-		    a = this.gold[g];
+		    var a = this.gold[g];
 		    if (this.samePoint(point, a[0])) {
 			return a[1];
 		    }

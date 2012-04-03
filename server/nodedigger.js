@@ -63,12 +63,24 @@ var commands = {
 	    var x = p.x;
 	    var y = p.y;
 	    return p.world.rows[y -1].substring(x - 1, x + 2) + '\n' 
-		+ p.world.rows[y].substring(x - 1, x + 2) + '\n'
+		+ p.world.rows[y].substring(x - 1, x)
+		+ maybeGoldAt(x, y, p.world)
+		+ p.world.rows[y].substring(x + 1, x + 2) + '\n'
 		+ p.world.rows[y+1].substring(x - 1, x + 2) + '\n';
 	}
 	return "Not OK\n";
     }
 };
+
+function maybeGoldAt(x, y, w) {
+    var p = {x: x, y: y};
+    if (w.goldAt(p)) {
+	return w.goldAt(p);
+    } else {
+	return w.rows[y].substring(x, x + 1);
+    }
+}
+
 
 function act(direction, message, players) {
     if (validPlayer(message)) {
@@ -184,6 +196,7 @@ function updatePlayers(players, event, message) {
 	}
     }
 
+			
     return p;
 }
 
