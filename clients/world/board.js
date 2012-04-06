@@ -12,7 +12,7 @@ function Board(contexts, width, height) {
     this.imgs = {};
 }
 
-Board.prototype.determineStart = function (p, field) {
+Board.prototype.determineStartX = function (p, field) {
     x = p - 5;
     if (x < 1) {
 	return 0;
@@ -25,9 +25,23 @@ Board.prototype.determineStart = function (p, field) {
     return x;
 }
 
+Board.prototype.determineStartY = function (p, field) {
+    y = p - 5;
+    if (y < 1) {
+	return 0;
+    }
+
+    if (p + 5 > field.height && field.height > 10) {
+	return field.height - 10;
+    }
+
+    return y;
+}
+
+
 Board.prototype.drawMap = function(field, gold, fog, p, bank) {
-    var cameraX = this.determineStart(p.x, field);
-    var cameraY = this.determineStart(p.y, field);
+    var cameraX = this.determineStartX(p.x, field);
+    var cameraY = this.determineStartY(p.y, field);
 
     this.restoreTile(this.ground);
     this.restoreTile(this.gold);
