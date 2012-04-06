@@ -12,36 +12,23 @@ function Board(contexts, width, height) {
     this.imgs = {};
 }
 
-Board.prototype.determineStartX = function (p, field) {
-    x = p - 5;
+Board.prototype.determine = function(p, max) {
+    var x = p - 5;
     if (x < 1) {
 	return 0;
     }
 
-    if (p + 5 > field.width && field.width > 10) {
-	return field.width - 10;
+    if (p + 5 > max && max > 10) {
+	return max - 10;
     }
 
     return x;
 }
 
-Board.prototype.determineStartY = function (p, field) {
-    y = p - 5;
-    if (y < 1) {
-	return 0;
-    }
-
-    if (p + 5 > field.height && field.height > 10) {
-	return field.height - 10;
-    }
-
-    return y;
-}
-
 
 Board.prototype.drawMap = function(field, gold, fog, p, bank) {
-    var cameraX = this.determineStartX(p.x, field);
-    var cameraY = this.determineStartY(p.y, field);
+    var cameraX = this.determine(p.x, field.width);
+    var cameraY = this.determine(p.y, field.height);
 
     this.restoreTile(this.ground);
     this.restoreTile(this.gold);
