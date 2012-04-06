@@ -12,17 +12,28 @@ function Board(contexts, width, height) {
     this.imgs = {};
 }
 
-Board.prototype.drawMap = function(field, gold, fog, p) {
-    var cameraX = p.x - 1;
-    var cameraY = p.y - 1;
-    var x = 0;
+Board.prototype.determineStart = function (p) {
+    x = p - 5;
+    return (x < 1) ? 0 : x;
+}
+
+Board.prototype.drawMap = function(field, gold, fog, p, bank) {
+    var cameraX = this.determineStart(p.x);
+    var cameraY = this.determineStart(p.y);
+
     this.restoreTile(this.ground);
     this.restoreTile(this.gold);
     this.restoreTile(this.fog);
-    for (var i = cameraX; i < cameraX + 15; i++) {
+
+    var fWidth = field.width;
+    var fHeight = field.height;
+
+    var x = 0;
+    for (var i = cameraX; i < cameraX + 10; i++) {
 	var y = 0;
-	for (var j = cameraY; j < cameraY + 15; j++) {
+	for (var j = cameraY; j < cameraY + 10; j++) {
 	    var position = {x: i, y: j};
+	 
 	    if (position.x > field.width - 1 || position.y > field.height - 1) {
 		this.drawImageAt(this.ground, tile, 'solid');
 	    } else {
@@ -34,6 +45,7 @@ Board.prototype.drawMap = function(field, gold, fog, p) {
 		this.drawImageAt(this.fog, tile, this.fogAt(position, fog));
 	    }
 	    y++;
+
 	}
 	x++;
     }
@@ -91,7 +103,17 @@ Board.prototype.handleScore = function(message) {
 
 Board.prototype.handleMove = function(message) {
     this.restoreTile(this.digger);
-    this.placeDiggerAt(this.digger, {x: 1, y: 1});
+
+    var p = message.to;
+    if (message.to.x > 5) {
+	p.x = 5;
+    }
+
+    if (message.to.y > 5) {
+	p.y = 5;
+    }
+
+    this.placeDiggerAt(this.digger, p);
 }
 
 Board.prototype.placeDiggerAt = function(context, point) {
@@ -104,6 +126,6 @@ Board.prototype.restoreTile = function(context) {
     context.restore();
 }
 
-Board.prototype.drawBank = function(bank) {
-    this.drawImageAt(this.gold, {x: bank.x, y: bank.y}, 'bank');
+Board.prototype.drawBank = function(p) {
+    this.drawImageAt(this.gold, {x: p.x, y: p.y}, 'bank');
 }

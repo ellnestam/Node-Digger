@@ -17,10 +17,6 @@ function initMap() {
 	});
     });    
     
-    /* boards['Diggah'] = new Board(createContexts('#p1'), 300, 250);
-    boards['SupaScoop'] = new Board(createContexts('#p2'), 300, 250);
-    boards['SupaScoop'] = new Board(createContexts('#p3'), 300, 250);
-    boards['Diggah'] = new Board(createContexts('#p4'), 300, 250);*/
     subscribe();
 }
 
@@ -51,7 +47,8 @@ function subscribe() {
     var subscription = client.subscribe('/events', function(message) {
 	var w = message.world;
 	var b = boardFor(message);
-	b.drawMap(field.parse(w.map), w.gold, w.discovered, message.to);
+	var bank = message.world.bank;
+	b.drawMap(field.parse(w.map), w.gold, w.discovered, message.to, bank);
 	b.handleMove(message);
     });
 
@@ -70,7 +67,6 @@ function subscribe() {
 }
 
 function boardFor(message) {
-    console.dir(message.playerName);
     return boards[message.playerName];
 }
 

@@ -196,6 +196,7 @@ wallTypes["49"] = 'center';
 
 
 var wall = {
+
     determineFrom : function(view) {
 	return this.typeFrom(this.toBits(view));
     },
