@@ -12,14 +12,22 @@ function Board(contexts, width, height) {
     this.imgs = {};
 }
 
-Board.prototype.determineStart = function (p) {
+Board.prototype.determineStart = function (p, field) {
     x = p - 5;
-    return (x < 1) ? 0 : x;
+    if (x < 1) {
+	return 0;
+    }
+
+    if (p + 5 > field.width && field.width > 10) {
+	return field.width - 10;
+    }
+
+    return x;
 }
 
 Board.prototype.drawMap = function(field, gold, fog, p, bank) {
-    var cameraX = this.determineStart(p.x);
-    var cameraY = this.determineStart(p.y);
+    var cameraX = this.determineStart(p.x, field);
+    var cameraY = this.determineStart(p.y, field);
 
     this.restoreTile(this.ground);
     this.restoreTile(this.gold);
@@ -104,11 +112,18 @@ Board.prototype.handleScore = function(message) {
 Board.prototype.handleMove = function(message) {
     this.restoreTile(this.digger);
 
-    var p = message.to;
+    var p = {x: message.to.x,
+	     y: message.to.y};
     if (message.to.x > 5) {
 	p.x = 5;
     }
 
+    var w = message.world.width;
+    console.log('w: ' + w + ' x: ' + message.to.x);
+    if (w - 5 < message.to.x && w > 10) {
+	p.x = (10 + message.to.x - w)
+    }
+    
     if (message.to.y > 5) {
 	p.y = 5;
     }

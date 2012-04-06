@@ -160,7 +160,7 @@ function addPlayers() {
 
 function createPlayer(player, pwd, x, y) {
     score[player] = 0;
-    var _w = wd.parse(wd.fileToString('fields/25.field'));
+    var _w = wd.parse(wd.fileToString('fields/1.field'));
     return {playerName: player,
 	    fieldNo : 1,
 	    password: pwd,
