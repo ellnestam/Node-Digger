@@ -1,6 +1,7 @@
 var client = new Faye.Client('http://localhost:8000/nodedigger');
 
 var boards = {};
+var sb;
 
 function initMap() {
 
@@ -11,12 +12,16 @@ function initMap() {
 	    var i = 1;
 	    for (var p in players) {
 		var player = players[p];
-		boards[player] = new Board(createContexts('#p' + i), 400, 400);
+		boards[player] = new Board(createContexts('#p' + i), 300, 150);
 		i++;
 	    }
 	});
-    });    
+    });
     
+    sb = createContext(10, 10, 0, 'a_name', '#score_board');
+
+    sb.fillText('Current score: keso', 0, 0);
+
     subscribe();
 }
 
@@ -25,7 +30,6 @@ function createContexts(divName) {
 	world : createContext(30, 40, 0, 'land', divName),
 	gold : createContext(30, 40, 1, 'gold', divName),
 	digger : createContext(30, 40, 2, 'player', divName),
-	score : createContext(30, 40, 1, 'score', divName),
 	fog : createContext(30, 40, 1, 'fog', divName),
     };
 }
@@ -42,6 +46,21 @@ function createContext(x, y, zIndex, name, div) {
     return ctx[0].getContext('2d');
 }
 
+function handleScore(message, context) {
+    context.save();
+    context.clearRect(0, 0, this.width, this.height);
+
+    var height = 0;
+    context.fillText('Current score: ', 10, height);
+    for (p in message) {
+	height += 10;
+	var player = message[p];
+	context.fillText(p + ': ' + player, 10, height);
+    }
+
+    context.restore();
+}
+
 function subscribe() {
 
     var subscription = client.subscribe('/events', function(message) {
@@ -53,8 +72,8 @@ function subscribe() {
     });
 
     var subscription = client.subscribe('/score', function(message) {
-	var b = boardFor('Diggah');
-	b.handleScore(message);
+	// var b = boardFor('Diggah');
+	handleScore(message, sb);
     });
 
     subscription.callback(function() {

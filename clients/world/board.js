@@ -2,7 +2,6 @@ function Board(contexts, width, height) {
     this.ground = contexts.world;
     this.digger = contexts.digger;
     this.gold = contexts.gold;
-    this.scoreBoard = contexts.score;
     this.fog = contexts.fog;
     
     this.scaleFactor = 20;
@@ -103,18 +102,12 @@ Board.prototype.drawImageAt = function(context, point, imageName) {
     }
 }
 
-Board.prototype.handleScore = function(message) {
-    this.scoreBoard.save();
-    this.scoreBoard.clearRect(0, 0, this.width, this.height);
-    this.scoreBoard.fillText('Current score: ' + message['Diggah'], 140, 25);
-    this.scoreBoard.restore();
-}
-
 Board.prototype.handleMove = function(message) {
     this.restoreTile(this.digger);
 
     var p = {x: message.to.x,
 	     y: message.to.y};
+
     if (message.to.x > 5) {
 	p.x = 5;
     }
