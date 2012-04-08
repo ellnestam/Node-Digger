@@ -30,8 +30,8 @@ function west() {
 
 function act(action) {
     var publication = client.publish('/act', {action    : action, 
-					      playerName: 'SupaScoop',
-					      password  : '4321'});
+					      playerName: 'Diggah',
+					      password  : '1234'});
 }
 
 $(document).bind('keydown', 'ctrl+up', function() {north()});

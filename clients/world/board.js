@@ -28,7 +28,7 @@ Board.prototype.determine = function(p, max) {
 
 Board.prototype.drawMap = function(field, gold, fog, p, bank) {
     var cameraX = this.determine(p.x, field.width);
-    var cameraY = this.determine(p.y, field.height);
+    var cameraY = this.determine(p.y, field.height + 1);
 
     this.restoreTile(this.ground);
     this.restoreTile(this.gold);
@@ -120,7 +120,6 @@ Board.prototype.handleMove = function(message) {
     }
 
     var w = message.world.width;
-    console.log('w: ' + w + ' x: ' + message.to.x);
     if (w - 5 < message.to.x && w > 10) {
 	p.x = (10 + message.to.x - w)
     }
@@ -128,6 +127,12 @@ Board.prototype.handleMove = function(message) {
     if (message.to.y > 5) {
 	p.y = 5;
     }
+
+    var h = message.world.height;
+    if (h - 5 < message.to.y && h > 10) {
+	p.y = (10 + message.to.y - h - 1);
+    }
+
 
     this.placeDiggerAt(this.digger, p);
 }

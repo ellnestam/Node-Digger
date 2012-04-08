@@ -11,7 +11,7 @@ function initMap() {
 	    var i = 1;
 	    for (var p in players) {
 		var player = players[p];
-		boards[player] = new Board(createContexts('#p' + i), 300, 250);
+		boards[player] = new Board(createContexts('#p' + i), 400, 400);
 		i++;
 	    }
 	});
