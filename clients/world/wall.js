@@ -203,9 +203,27 @@ wallTypes["69"] = 'empty';
 wallTypes["76"] = 'empty';
 wallTypes["131"] = 'empty';
 wallTypes["111"] = 'empty';
+wallTypes["482"] = 'empty';
+wallTypes["460"] = 'empty';
+wallTypes["421"] = 'empty';
+wallTypes["357"] = 'empty';
+wallTypes["200"] = 'empty';
+wallTypes["38"] = 'empty';
+wallTypes["168"] = 'empty';
+wallTypes["137"] = 'empty';
+wallTypes["203"] = 'empty';
+wallTypes["259"] = 'empty';
+
 
 wallTypes["511"] = 'solid';
 
+wallTypes["304"] = 'center';
+wallTypes["408"] = 'center';
+wallTypes["307"] = 'center';
+wallTypes["19"] = 'center';
+wallTypes["21"] = 'center';
+wallTypes["153"] = 'center';
+wallTypes["465"] = 'center';
 wallTypes["278"] = 'center';
 wallTypes["88"] = 'center';
 wallTypes["176"] = 'center';
