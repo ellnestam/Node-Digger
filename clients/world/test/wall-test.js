@@ -28,7 +28,7 @@ buster.testCase("Wall Types", {
 					     ['w', 'w', 'w' ],
 					     ['w', 'w', 'w' ],
 					    ]);
-	buster.assert.equals(wall.typeFrom(surroundings), 'w_north');
+	buster.assert.equals(wall.typeFrom(surroundings), 'w_south');
     }, 
 
     "South east" : function() {

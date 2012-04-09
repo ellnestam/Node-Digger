@@ -3,9 +3,12 @@ var wallTypes = [];
 
 wallTypes["63"] = 'w_south';
 wallTypes["383"] = 'w_south';
+wallTypes["191"] = 'w_south';
+wallTypes["120"] = 'w_south';
 
 wallTypes["504"] = 'w_north';
 wallTypes["505"] = 'w_north';
+wallTypes["506"] = 'w_north';
 wallTypes["508"] = 'w_north';
 wallTypes["509"] = 'w_north';
 wallTypes["248"] = 'w_north';
@@ -21,7 +24,7 @@ wallTypes["438"] = 'w_west';
 wallTypes["439"] = 'w_west';
 wallTypes["503"] = 'w_west';
 
-// wallTypes["446"] = 'w_west';
+// wallTypes["154"] = 'w_west';
 
 
 wallTypes["319"] = 'w_south';
@@ -42,6 +45,8 @@ wallTypes["57"] = 'slim';
 // ?
 wallTypes["248"] = 'w_southeast';
 wallTypes["444"] = 'w_southwest';
+
+wallTypes["255"] = 'w_southeast';
 
 
 // To Change
@@ -68,10 +73,13 @@ wallTypes["71"] = 'empty';
 wallTypes["73"] = 'empty';
 wallTypes["79"] = 'empty';
 wallTypes["292"] = 'empty';
+wallTypes["207"] = 'empty';
 wallTypes["295"] = 'empty';
 wallTypes["484"] = 'empty';
 wallTypes["457"] = 'empty';
 wallTypes["455"] = 'empty';
+wallTypes["39"] = 'empty';
+wallTypes["15"] = 'empty';
 wallTypes["40"] = 'empty';
 wallTypes["75"] = 'empty';
 wallTypes["77"] = 'empty';
@@ -93,6 +101,8 @@ wallTypes["129"] = 'empty';
 wallTypes["10"] = 'empty';
 wallTypes["135"] = 'empty';
 wallTypes["450"] = 'empty';
+wallTypes["453"] = 'empty';
+wallTypes["44"] = 'empty';
 wallTypes["34"] = 'empty';
 wallTypes["68"] = 'empty';
 wallTypes["7"] = 'empty';
@@ -159,19 +169,36 @@ wallTypes["164"] = 'empty';
 wallTypes["352"] = 'empty';
 wallTypes["45"] = 'empty';
 wallTypes["367"] = 'empty';
+wallTypes["160"] = 'empty';
+wallTypes["103"] = 'empty';
+wallTypes["143"] = 'empty';
+wallTypes["265"] = 'empty';
+wallTypes["418"] = 'empty';
 
 wallTypes["511"] = 'solid';
-wallTypes["506"] = 'solid';
 
 
-wallTypes["89"] = 'arrow_left';
+wallTypes["468"] = 'center';
+wallTypes["279"] = 'center';
+wallTypes["209"] = 'center';
+wallTypes["80"] = 'center';
+wallTypes["23"] = 'center';
+wallTypes["24"] = 'center';
+wallTypes["26"] = 'center';
+wallTypes["52"] = 'center';
+wallTypes["151"] = 'center';
+wallTypes["121"] = 'center';
+wallTypes["144"] = 'center';
 
+// Could be changed to something cooler
+// ---
 wallTypes["308"] = 'arrow_right';
 wallTypes["372"] = 'arrow_right';
 wallTypes["48"] = 'arrow_right';
-
 wallTypes["446"] = 'pipe_right';
 wallTypes["251"] = 'pipe_left';
+wallTypes["89"] = 'arrow_left';
+// ---
 
 
 wallTypes["273"] = 'center';
