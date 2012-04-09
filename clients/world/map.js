@@ -48,7 +48,7 @@ function createContext(x, y, zIndex, name, div) {
 
 function handleScore(message, context) {
     context.save();
-    context.clearRect(0, 0, this.width, this.height);
+    context.clearRect(0, 0, 100, 50);
 
     var height = 0;
     context.fillText('Current score: ', 10, height);
