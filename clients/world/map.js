@@ -18,10 +18,7 @@ function initMap() {
 	});
     });
     
-    sb = createContext(10, 10, 0, 'a_name', '#score_board');
-
-    sb.fillText('Current score: keso', 0, 0);
-
+    sb = createContext(10, 10, 0, 'score', '#score_board');
     subscribe();
 }
 
@@ -72,7 +69,6 @@ function subscribe() {
     });
 
     var subscription = client.subscribe('/score', function(message) {
-	// var b = boardFor('Diggah');
 	handleScore(message, sb);
     });
 
