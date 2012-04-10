@@ -3,6 +3,7 @@ var faye = require('faye');
 var url = require('url');
 
 var port = 8000;
+var clientPort = 1337;
 
 var wd = require('./world/world.js');
 var ground = require('./world/ground.js');
@@ -129,7 +130,7 @@ var srv = http.createServer(function (req, res) {
 	res.end(c.call(this, message));	
     }
     res.end('Unrecognized command\n');
-}).listen(1337);
+}).listen(clientPort);
 
 var admin = http.createServer(function (req, res) {
     res.writeHead(200, {'Content-Type' : 'text/plain',
@@ -273,7 +274,9 @@ function grab(point, w, player) {
     if (w.goldAt(point) > 0 && canCarryMore(player)) {
 	w.removeGoldFrom(point, 1);
 	player.load += 1;
+	return 'OK';
     }
+    return 'Not OK';
 }
 
 function look(point, w, player) {
