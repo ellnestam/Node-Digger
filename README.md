@@ -1,13 +1,17 @@
 This is a Node.js adaptation of GoldDigger, a gaming server/map visualizer.
 
 ### Introduction
- In a not too distant future resources on earth has gotten very scarce and the demand for certain minerals has made their price skyrocket. All mineral trades are controlled by either government or a few mega corporations that got their licenses to trade and mine back in the early 21st century when people still believed in patents, licensing and certifications.
+ In a not too distant future, resources on earth has gotten very scarce and the demand for certain minerals has made their price skyrocket. All mineral trades are controlled by either government or a few mega corporations that got their licenses to trade and mine back in the early 21st century when people still believed in patents, licensing and certifications.
 
- A glimmer of hope has emerged on the horizon as your team has recently made significant progress in the field of fast space travel combined with advanced remote communication and are on the verge of being able to send small mineral collecting spiceships. The first batch of colletor ships was sent 3 weeks ago, complete with their own collecting probe, also known as a mineral digger or 'digger'. 
+ But now a sliver of hope has appeared appeared at the horizon as your team has recently made significant progress in the field of fast space travel combined with advanced remote communication. You are now on the verge of being able to send small mineral collecting spaceships and maybe this is the chance everybody has been waiting for. Is this the chance to restore a free market and also restore the power balance once again as everyone who dares to explore the interstellar mineral minefields can engage in mining and trading.
+ 
+---
 
-3 of the 4 ships in the first batch was 'confiscated' or has disappeared, you suspect other companies might control them now.
+ You can barely wait because soon the first batch you of ships you sent out, complete with collecting probes, also known as mineral diggers or diggers will reach their destination. 
 
- The only spaceship that is still under your control landed approximately 15 minutes ago. The uplink test indicates that the communication works and the ship is awaiting your first commands. According to the landing log it is located in a small cave, hoovering on top of the mineral drop zone. 
+Information now reaches you and tells you that 3 out of the four ships you sent out has either gone missing or crashed. But you suspect it has been 'confiscated'.
+
+ Your hope now lies with the only spaceship that is still under your control, which landed approximately 15 minutes ago. The uplink test indicates that the communication works and the ship is probably awaiting your first commands. According to the landing log it is located in a small cave, hoovering on top of the mineral drop zone. 
 
 Be careful, despite the diggers sturdy constructions you stand no chance to quick recovery if a digger gets lost in the vast caves. 
 
