@@ -57,14 +57,14 @@ To send a command, you simply post a request as follows:
 http://127.0.0.1/<botname>/<pwd>/<command>
 
 The possible commands are: 
-- north
-- east
-- south
-- west
-- look
-- grab
-- drop
-- next
+* north
+* east
+* south
+* west
+* look
+* grab
+* drop
+* next
 
 
 Each command results in a respons. Either 'OK' or 'Not OK'. 'Not OK' is used whenever there is a problem, i.e wrong botname, password or some other unrecoverable 'unknown' error. 
@@ -75,16 +75,17 @@ Under normal conditions 'OK' are sent by all commands except for look, which ret
 
 When you start and perform the look command it will typically result in a response like this:
 
-www
-wb.
-w..
+    www
+    wb.
+    w..
 
 'w' means wall and 'b' means 'bank' and whenever you enter a new map the bot always starts at the bank.
 
 When you've walked around for a bit and look around, it might look like this:
-...
-w.7
-...
+
+    ...
+    w.7
+    ...
 
 The center is always the bot position and any number indicates the amount of minerals on the ground. 7 for example, as shown in this example:
 
