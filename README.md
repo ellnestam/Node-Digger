@@ -57,15 +57,14 @@ To send a command, you simply post a request as follows:
 http://127.0.0.1/botname/pwd/command
 
 The possible commands are: 
-    * north
-    * east
-    * south
-    * west
-    * look
-    * grab
-    * drop
-    * next
-
+*   north
+*   east
+*   south
+*   west
+*   look
+*   grab
+*   drop
+*   next
 
 Each command results in a respons. Either 'OK' or 'Not OK'. 'Not OK' is used whenever there is a problem, i.e wrong botname, password or some other unrecoverable 'unknown' error. 
 
