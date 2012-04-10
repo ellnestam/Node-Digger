@@ -1,6 +1,6 @@
 This is a Node.js adaptation of GoldDigger, a gaming server/map visualizer.
 
-===Introduction===
+### Introduction
  In a not too distant future resources on earth has gotten very scarce and the demand for certain minerals has made their price skyrocket. All mineral trades are controlled by either government or a few mega corporations that got their licenses to trade and mine back in the early 21st century when people still believed in patents, licensing and certifications.
 
  A glimmer of hope has emerged on the horizon as your team has recently made significant progress in the field of fast space travel combined with advanced remote communication and are on the verge of being able to send small mineral collecting spiceships. The first batch of colletor ships was sent 3 weeks ago, complete with their own collecting probe, also known as a mineral digger or 'digger'. 
@@ -16,36 +16,36 @@ And remember, she who controls the minerals, controls the universe!
 Good luck.
 
 
-==Goal of the game==
+## Goal of the game
 
 The primary goal of the game is to collect as much minerals as you possibly can during a predetermined period of time. This is best done using the REST-like API that the server provides. The API documentation is found and the end of this README.
 
 We recommend 1-3 hours of play.
 
-==Getting started==
+## Getting started
 
 The 'client' used to visualize the game is configured for up to 4 different simultanious competitors. But the server hasn't been 'load tested'. It is however possible to add an arbitraty number of clients to the 'players' file, allowing for a lot of simultanious player on the same node.js instance.
 
-=Pre-reqs=
+# Pre-reqs
 To run your own server you need:
 - Node.js (http://nodejs.org/)
 - NPM (http://npmjs.org/)
 - Faye (http://faye.jcoglan.com/)
 
-=Configuration=
+# Configuration
 - Take a look at the file '<path to nodedigger>/server/players'-dir. It consists of rows with tuples: BotName + password. 
 
 The server is tested with bot names that contain no spaces and only small or large letters. Good names can be found in the players file. Bad names include: L33tZûrz €€==> or '._. <= The Whale Lives III' or the untested '%¤-¤%'.
 
 If you want the server to run on specific ports you need to edit nodedigger.js and the visualizer, if you're planning on using that.
 
-=Getting started=
+# Starting the game
 
 - Start the server: node nodedigger.js
 - Launch browser, and open file: <<nodediggerdir>>/clients/world/map.html
 - Let the players connect and start collecting minerals
 
-==API==
+## API
 
 The communication with the server done by using HTTP-requests.
 
@@ -67,7 +67,7 @@ Each command results in a respons. Either 'OK' or 'Not OK'. 'Not OK' is used whe
 
 Under normal conditions 'OK' are sent by all commands except for look, which returns a small map of 3x3 chars.
 
-The look command:
+# The look command:
 
 When you start and perform the look command it will typically result in a response like this:
 
@@ -86,6 +86,10 @@ The center is always the bot position and any number indicates the amount of min
 
 It is not possible to walk through walls, obviously, and minerals can vary from 1 through 9.
 
-The 'next' command
+# The 'next' command
 
 Next can only be used when the current map is emptied from minerals, i.e the land is completely drained. 
+
+# Directions commands
+
+North, east, west and south moves the bot around. Hitting walls just results in an 'OK' response and the bot not moving.
