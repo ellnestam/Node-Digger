@@ -7,9 +7,7 @@ This is a Node.js adaptation of GoldDigger, a gaming server/map visualizer.
  
 ---
 
- You can barely wait because soon the first batch you of ships you sent out, complete with collecting probes, also known as mineral diggers or diggers will reach their destination. 
-
-Information now reaches you and tells you that 3 out of the four ships you sent out has either gone missing or crashed. But you suspect it has been 'confiscated'.
+ The first batch you of ships you sent out, complete with collecting probes, also known as diggers has probably reached their destination by now. A quick log scan tells you that tells you that three of the four ships you sent out has either gone missing or crashed. Or is it foul play or have they been 'confiscated' by the government.
 
  Your hope now lies with the only spaceship that is still under your control, which landed approximately 15 minutes ago. The uplink test indicates that the communication works and the ship is probably awaiting your first commands. According to the landing log it is located in a small cave, hoovering on top of the mineral drop zone. 
 
