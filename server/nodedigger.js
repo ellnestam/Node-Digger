@@ -108,7 +108,7 @@ function updateWorld(wd, player) {
 
 function determineMap(player) {
     current = player.fieldNo;
-    if (current > 110) {
+    if (current >= 110) {
 	return 1;
     }
     return current + 1;
@@ -161,9 +161,9 @@ function addPlayers() {
 
 function createPlayer(player, pwd, x, y) {
     score[player] = 0;
-    var _w = wd.parse(wd.fileToString('fields/106.field'));
+    var _w = wd.parse(wd.fileToString('fields/1.field'));
     return {playerName: player,
-	    fieldNo : 106,
+	    fieldNo : 1,
 	    password: pwd,
 	    x: x,
 	    y: y,
