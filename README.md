@@ -39,9 +39,12 @@ To run your own server you need:
 -   Faye (http://faye.jcoglan.com/)
 
 # Configuration
-- Take a look at the file '<path to nodedigger>/server/players'-dir. It consists of rows with pair: BotName:password. 
 
-The server is tested with bot names that contain no spaces and only small or large letters. Good names can be found in the players file. Bad names include: 
+Take a look at the file '<path to nodedigger>/server/players'-dir. It consists of rows with pair: BotName:password. 
+
+The server is tested with bot names that contain no spaces and only small or large letters. Good names can be found in the players file. 
+
+Untested (bad) names include: 
 
 *   '€€ L33tZûrz €€'
 *   ._. <= the whale Lives 
