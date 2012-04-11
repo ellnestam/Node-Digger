@@ -286,6 +286,51 @@ wallTypes["206"] = 'empty';
 wallTypes["110"] = 'empty';
 wallTypes["173"] = 'empty';
 wallTypes["297"] = 'empty';
+wallTypes["355"] = 'empty';
+wallTypes["462"] = 'empty';
+
+
+
+wallTypes["511"] = 'solid';
+
+wallTypes["62"] = 'w_northeast_i';
+wallTypes["375"] = 'w_northeast_i';
+wallTypes["119"] = 'w_northeast_i';
+wallTypes["310"] = 'w_northeast_i';
+wallTypes["311"] = 'w_northeast_i';
+wallTypes["318"] = 'w_northeast_i';
+wallTypes["183"] = 'w_northeast_i';
+wallTypes["374"] = 'w_northeast_i';
+
+wallTypes["155"] = 'w_northwest_i';
+wallTypes["315"] = 'w_northwest_i';
+wallTypes["59"] = 'w_northwest_i';
+wallTypes["123"] = 'w_northwest_i';
+wallTypes["159"] = 'w_northwest_i';
+wallTypes["287"] = 'w_northwest_i';
+wallTypes["347"] = 'w_northwest_i';
+wallTypes["283"] = 'w_northwest_i';
+wallTypes["91"] = 'w_northwest_i';
+wallTypes["95"] = 'w_northwest_i';
+wallTypes["31"] = 'w_northwest_i';
+
+
+wallTypes["434"] = 'w_southeast_i';
+wallTypes["500"] = 'w_southeast_i';
+wallTypes["441"] = 'w_southeast_i';
+wallTypes["437"] = 'w_southeast_i';
+wallTypes["436"] = 'w_southeast_i';
+wallTypes["442"] = 'w_southeast_i';
+wallTypes["498"] = 'w_southeast_i';
+
+wallTypes["476"] = 'w_southwest_i';
+wallTypes["474"] = 'w_southwest_i';
+wallTypes["220"] = 'w_southwest_i';
+wallTypes["221"] = 'w_southwest_i';
+wallTypes["249"] = 'w_southwest_i';
+wallTypes["473"] = 'w_southwest_i';
+wallTypes["472"] = 'w_southwest_i';
+wallTypes["217"] = 'w_southwest_i';
 
 wallTypes["188"] = 'center';
 wallTypes["179"] = 'center';
@@ -308,45 +353,8 @@ wallTypes["407"] = 'center';
 wallTypes["409"] = 'center';
 wallTypes["51"] = 'center';
 wallTypes["337"] = 'center';
-
-
-wallTypes["511"] = 'solid';
-
-wallTypes["62"] = 'w_northeast_i';
-wallTypes["375"] = 'w_northeast_i';
-wallTypes["119"] = 'w_northeast_i';
-wallTypes["310"] = 'w_northeast_i';
-wallTypes["311"] = 'w_northeast_i';
-wallTypes["318"] = 'w_northeast_i';
-wallTypes["183"] = 'w_northeast_i';
-wallTypes["374"] = 'w_northeast_i';
-
-wallTypes["59"] = 'w_northwest_i';
-wallTypes["123"] = 'w_northwest_i';
-wallTypes["159"] = 'w_northwest_i';
-wallTypes["287"] = 'w_northwest_i';
-wallTypes["347"] = 'w_northwest_i';
-wallTypes["283"] = 'w_northwest_i';
-wallTypes["91"] = 'w_northwest_i';
-wallTypes["95"] = 'w_northwest_i';
-wallTypes["31"] = 'w_northwest_i';
-
-wallTypes["434"] = 'w_southeast_i';
-wallTypes["500"] = 'w_southeast_i';
-wallTypes["441"] = 'w_southeast_i';
-wallTypes["437"] = 'w_southeast_i';
-wallTypes["436"] = 'w_southeast_i';
-wallTypes["442"] = 'w_southeast_i';
-wallTypes["498"] = 'w_southeast_i';
-
-wallTypes["474"] = 'w_southwest_i';
-wallTypes["220"] = 'w_southwest_i';
-wallTypes["221"] = 'w_southwest_i';
-wallTypes["249"] = 'w_southwest_i';
-wallTypes["473"] = 'w_southwest_i';
-wallTypes["472"] = 'w_southwest_i';
-wallTypes["217"] = 'w_southwest_i';
-
+wallTypes["338"] = 'center';
+wallTypes["29"] = 'center';
 wallTypes["30"] = 'center';
 wallTypes["85"] = 'center';
 wallTypes["281"] = 'center';
@@ -496,4 +504,4 @@ var wall = {
     },
 }
 
-module.exports = wall;
+// module.exports = wall;
