@@ -31,19 +31,21 @@ We recommend 1-3 hours of play.
 The 'client' used to visualize the game is configured for up to 4 different simultanious competitors. But the server hasn't been 'load tested'. It is however possible to add an arbitraty number of clients to the 'players' file, allowing for a lot of simultanious player on the same node.js instance.
 
 # Pre-reqs
+
 To run your own server you need:
+
 -   Node.js (http://nodejs.org/)
 -   NPM (http://npmjs.org/)
 -   Faye (http://faye.jcoglan.com/)
 
 # Configuration
-- Take a look at the file '<path to nodedigger>/server/players'-dir. It consists of rows with tuples: BotName + password. 
+- Take a look at the file '<path to nodedigger>/server/players'-dir. It consists of rows with pair: BotName:password. 
 
 The server is tested with bot names that contain no spaces and only small or large letters. Good names can be found in the players file. Bad names include: 
 
-*   L33tZûrz €€==>
-*   '._. <= The Whale Lives III' 
-*   or the untested '>¤.¤<', a.k.a as 'kosmos katten'
+*   '€€ L33tZûrz €€'
+*   ._. <= the whale Lives 
+*   or the equally untested '>¤.¤<', a.k.a 'kosmos katten'
 
 If you want the server to run on specific ports you need to edit nodedigger.js and the visualizer, if you're planning on using the pre packaged HTML-visualizer.
 
