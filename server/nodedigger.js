@@ -161,9 +161,9 @@ function addPlayers() {
 
 function createPlayer(player, pwd, x, y) {
     score[player] = 0;
-    var _w = wd.parse(wd.fileToString('fields/46.field'));
+    var _w = wd.parse(wd.fileToString('fields/63.field'));
     return {playerName: player,
-	    fieldNo : 1,
+	    fieldNo : 63,
 	    password: pwd,
 	    x: x,
 	    y: y,
@@ -196,8 +196,7 @@ function updatePlayers(players, event, message) {
 		    load: event.load};
 	}
     }
-
-			
+    
     return p;
 }
 
