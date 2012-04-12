@@ -80,7 +80,7 @@ function maybeGoldAt(x, y, w) {
     if (w.goldAt(p)) {
 	return w.goldAt(p);
     } else {
-	return w.rows[y].substring(x, x + 1);
+	return '.';
     }
 }
 
