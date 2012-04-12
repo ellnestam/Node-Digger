@@ -98,9 +98,13 @@ The center is always the bot position and any number indicates the amount of min
 
 It is not possible to walk through walls, obviously, and minerals can vary from 1 through 9.
 
+# Directions commands
+
+North, east, west and south moves the bot around. Hitting walls just results in an 'OK' response and the bot not moving.
+
 # The 'next' command
 
-Next can only be used when the current map is emptied from minerals, i.e the land is completely drained. 
+Next is used to travel to the next mineral field, i.e to change map. It can only be used when the current map is cleared from minerals, i.e every piece of mineral is picked up and put in the drop zone.
 
 # The grab command
 
@@ -110,6 +114,6 @@ Grab picks up one mineral unit, if there is one. This unit is carried around unt
 
 Dropping minerals from you inventory is done with the drop command. If you are carrying nothing, nothing happens. If you are carrying minerals, they are dropped on the ground. If the digger is at the dropzone, or the 'bank', a point is added for each unit dropped. And the load is reduced with one unit. This is how you earn points. If there are more than nine (9 units) of minerals on the ground, no more minerals can be dropped at that location.
 
-# Directions commands
+# The 'Drop Zone'
 
-North, east, west and south moves the bot around. Hitting walls just results in an 'OK' response and the bot not moving.
+The drop zone, or bank, is located at position 1,1 on every map. This is also where the digger starts when arriving at a new mineral field. For instance when game starts or the 'next' command has executed properly.
