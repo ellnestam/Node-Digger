@@ -27,8 +27,10 @@ var commands = {
     next : function(message) {
 	if (validPlayer(message)) {
 	    var p = fetchPlayer(message, players);
-	    updateWorld(wd, p);
-	    return 'OK\n';
+	    if (mapCleared(p)) {
+		updateWorld(wd, p);
+		return 'OK\n';
+	    }
 	}
 	return 'Not OK\n';
     },
@@ -82,6 +84,15 @@ function maybeGoldAt(x, y, w) {
     }
 }
 
+function mapCleared(player) {
+    var total = 0;
+    for (var m in player.world.gold) {
+	var matrix = player.world.gold[m];
+	total += matrix[1];
+    }
+
+    return player.load < 1 && total < 1;
+}
 
 function act(direction, message, players) {
     if (validPlayer(message)) {
