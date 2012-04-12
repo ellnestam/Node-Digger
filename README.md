@@ -104,16 +104,18 @@ North, east, west and south moves the bot around. Hitting walls just results in 
 
 # The 'next' command
 
-Next is used to travel to the next mineral field, i.e to change map. It can only be used when the current map is cleared from minerals, i.e every piece of mineral is picked up and put in the drop zone.
+Next is used to travel to the next mineral field, i.e change map. It can only be used when the current map is cleared from minerals and every piece that is carried is dropped in the drop zone. Which is locate at position 1,1 on every map.
 
-# The grab command
+# The 'grab' command
 
-Grab picks up one mineral unit, if there is one. This unit is carried around until it is dropped. See drop. The default limit on how much a digger can carry is three (3 units), this is however very easy to change in the server. If the grab command is executed while the limit is reached nothing happens. To reduce the load drop minerals.
+Grab picks up one mineral unit, if there is one on the ground, and puts it in the diggers mineral compartment.  This unit is carried around until it is dropped. See drop. The default limit on how much a digger can carry is three (3 units), this is however very easy to change in the server so. If the grab command is executed while the limit is reached, or there is nothing on the ground, nothing happens. To drop something on the ground or place it in the drop zone, use the drop command.
 
-# The drop command
+# The 'drop' command
 
-Dropping minerals from you inventory is done with the drop command. If you are carrying nothing, nothing happens. If you are carrying minerals, they are dropped on the ground. If the digger is at the dropzone, or the 'bank', a point is added for each unit dropped. And the load is reduced with one unit. This is how you earn points. If there are more than nine (9 units) of minerals on the ground, no more minerals can be dropped at that location.
+Dropping minerals from you inventory is done with the drop command. If you are carrying nothing, nothing happens. If you are carrying minerals, they are dropped on the ground. 
+
+If the digger is at the dropzone, or the 'bank', a point is scored for each unit dropped and the load is reduced with one unit. This is the only way to  earn points. If there are more than nine (9 units) of minerals on the ground, no more minerals can be dropped at that location.
 
 # The 'Drop Zone'
 
-The drop zone, or bank, is located at position 1,1 on every map. This is also where the digger starts when arriving at a new mineral field. For instance when game starts or the 'next' command has executed properly.
+The drop zone, or bank, is located at position 1,1 on every map. This is also where the digger starts when arriving at a new mineral field. For instance when the game starts or the 'next' command has executed properly.
