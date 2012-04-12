@@ -102,6 +102,14 @@ It is not possible to walk through walls, obviously, and minerals can vary from 
 
 Next can only be used when the current map is emptied from minerals, i.e the land is completely drained. 
 
+# The grab command
+
+Grab picks up one mineral unit, if there is one. This unit is carried around until it is dropped. See drop. The default limit on how much a digger can carry is three (3 units), this is however very easy to change in the server. If the grab command is executed while the limit is reached nothing happens. To reduce the load drop minerals.
+
+# The drop command
+
+Dropping minerals from you inventory is done with the drop command. If you are carrying nothing, nothing happens. If you are carrying minerals, they are dropped on the ground. If the digger is at the dropzone, or the 'bank', a point is added for each unit dropped. And the load is reduced with one unit. This is how you earn points. If there are more than nine (9 units) of minerals on the ground, no more minerals can be dropped at that location.
+
 # Directions commands
 
 North, east, west and south moves the bot around. Hitting walls just results in an 'OK' response and the bot not moving.
