@@ -7,9 +7,9 @@ This is a Node.js adaptation of GoldDigger, a gaming server/map visualizer.
  
 ---
 
- The first batch you of ships you sent out, complete with collecting probes, also known as diggers has probably reached their destination by now. A quick log scan tells you that tells you that three of the four ships you sent out has either gone missing or crashed. Or is it foul play or have they been 'confiscated' by the government.
+ The first batch you of ships you sent out, complete with collecting probes, also known as diggers has probably reached their destination by now. A quick log scan tells you that this might be the case but a closer look reveals that three of the four ships you sent out has either gone missing or crashed. You suspect foul play or have they been 'confiscated' by the government.
 
- Your hope now lies with the only spaceship that is still under your control, which landed approximately 15 minutes ago. The uplink test indicates that the communication works and the ship is probably awaiting your first commands. According to the landing log it is located in a small cave, hoovering on top of the mineral drop zone. 
+ Your hope now lies with the only spaceship that is still under your control, which landed approximately 15 minutes ago according to the space log. The uplink tests indicates that the communication works and the ship is probably awaiting your first commands. According to the space ships landing log it is located in a small cave, hoovering on top of the mineral drop zone.
 
 Be careful, despite the diggers sturdy constructions you stand no chance to quick recovery if a digger gets lost in the vast caves. 
 
@@ -24,7 +24,7 @@ The primary goal of the game is to collect as much minerals as you possibly can 
 
 We recommend 1-3 hours of play.
 
-## Getting started
+## Getting started (admins only)
 
 The 'client' used to visualize the game is configured for up to 4 different simultanious competitors. But the server hasn't been 'load tested'. It is however possible to add an arbitraty number of clients to the 'players' file, allowing for a lot of simultanious player on the same node.js instance.
 
@@ -56,12 +56,12 @@ If you want the server to run on specific ports you need to edit nodedigger.js a
 - Launch browser, and open file: <<nodediggerdir>>/clients/world/map.html
 - Let the players connect and start collecting minerals
 
-## API
+## API (for players)
 
 The communication with the server done by using HTTP-requests.
 
 To send a command, you simply post a request as follows:
-http://127.0.0.1/botname/pwd/command
+http://server.ip.address/YourBotName/YourPassword/your_command
 
 The possible commands are: 
 
@@ -76,7 +76,7 @@ The possible commands are:
 
 Each command results in a respons. Either 'OK' or 'Not OK'. 'Not OK' is used whenever there is a problem, i.e wrong botname, password or some other unrecoverable 'unknown' error. 
 
-Under normal conditions 'OK' are sent by all commands except for look, which returns a small map of 3x3 chars.
+Under normal conditions 'OK' are sent by all commands except for look, which returns a small map of 3x3 chars. And 'next' which only returns 'OK' if you've traveled to the next mineral field (changed map).
 
 # The look command:
 
@@ -86,7 +86,7 @@ When you start and perform the look command it will typically result in a respon
     wb.
     w..
 
-'w' means wall and 'b' means 'bank' and whenever you enter a new map the bot always starts at the bank.
+'w' means wall and 'b' stands for 'bank' (the drop zone) and whenever you enter a new map the bot always starts there, at the bank. Yep, you got it. The map is a matrix.
 
 When you've walked around for a bit and look around, it might look like this:
 
@@ -94,9 +94,11 @@ When you've walked around for a bit and look around, it might look like this:
     w.7
     ...
 
-The center is always the bot position and any number indicates the amount of minerals on the ground. 7 for example, as shown in this example:
+The center is always the bot position and any number indicates the amount of minerals on the ground. 7 for example, as shown in this example. If you move east you can use the grab command. If you then perform look, you can see that the amount of minerals has been reduced to 6.
 
-It is not possible to walk through walls, obviously, and minerals can vary from 1 through 9.
+It is not possible to walk through walls, obviously, there has to been some level of realism? Right?
+
+Minerals can vary from 1 through 9 and when there are no minerals present, a dot . is shown. 
 
 # Directions commands
 
